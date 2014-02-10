@@ -36,17 +36,17 @@ namespace Web_Project2.Controllers
             string emailAddress = user.EmailAddress;
             string nonHashedPassword = user.Password;
 
-            bool valid = sql.isValidLogin(user, emailAddress, nonHashedPassword);
+            //bool valid = sql.isValidLogin(user, emailAddress, nonHashedPassword);
 
-            if (valid)
-            {
-                FormsAuthentication.SetAuthCookie(emailAddress, false);
-                return RedirectToAction("Index");
-            }
-            else
-            {
+            //if (valid)
+           // {
+            //    FormsAuthentication.SetAuthCookie(emailAddress, false);
+            //    return RedirectToAction("Index");
+           // }
+           // else
+           // {
                 return View();
-            }
+           // }
             
         }
         public ActionResult LogOff()

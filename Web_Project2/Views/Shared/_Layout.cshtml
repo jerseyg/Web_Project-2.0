@@ -40,7 +40,6 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Home", "index", "Home")</li>
-            <li>@Html.ActionLink("Services", "Services", "Home")</li>
             <li>@Html.ActionLink("About", "About", "Home")</li>
             <li>@Html.ActionLink("Contact", "index", "Home")</li>
           </ul>
@@ -77,33 +76,14 @@
       <footer class="foo">
       <ul class="foot">
             <li class="line">@Html.ActionLink("Home", "index", "Home")</li>
-            <li class="line">@Html.ActionLink("Services", "Services", "Home")</li>
             <li class="line">@Html.ActionLink("About", "About", "Home")</li>
             <li class="line">@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li class="line">@Html.ActionLink("Sitemap", "Sitemap", "Home")</li>
       </ul>
-
-  	<script>
-  	    (function () {
-  	        var cx = '005588287786173065120:l0naixfkufi';
-  	        var gcse = document.createElement('script');
-  	        gcse.type = 'text/javascript';
-  	        gcse.async = true;
-  	        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-                '//www.google.com/cse/cse.js?cx=' + cx;
-  	        var s = document.getElementsByTagName('script')[0];
-  	        s.parentNode.insertBefore(gcse, s);
-  	    })();
-</script>
-<gcse:search></gcse:search>
 
 	
 
         <p>&copy; Company 2013</p>
       </footer>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -122,7 +102,5 @@
              
           });
       </script>
-      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-
   </body>
 </html>

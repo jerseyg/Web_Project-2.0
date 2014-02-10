@@ -10,7 +10,8 @@ using Web_Project2.Models;
 using Web_Project2.ExternalHelper;
 using Web_Project2.Controllers.DatabaseHandler;
 using System.Text;
-using Web_Project2.ProjectEntity__Web_Project2;
+using System.Threading.Tasks;
+using Parse;
 
 
 namespace Web_Project2.Controllers
@@ -19,27 +20,19 @@ namespace Web_Project2.Controllers
     public class AccountController : Controller
     {
         public const int SALT_BYTE_SIZE = 24;
-        private Models_ db = new Models_();
-
-        //
-        // GET: /Account/
-
-        public ActionResult Index()
-        {
-            return View(db.Users.ToList());
-        }
+       // private Models_ db = new Models_();
 
         //
         // GET: /Account/Details/5
 
         public ActionResult Details(Guid id)
         {
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //User user = db.Users.Find(id);
+            //if (user == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View();
         }
 
         //
@@ -55,19 +48,9 @@ namespace Web_Project2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(User user)
+        public async Task<ActionResult> Create(User user)
         {
-            SQL sql = new SQL();
-            
 
-            bool userExists = sql.UserCheck(user, user.EmailAddress);
-            if (userExists == true)
-            {
-                ViewBag.Exists = "Username Already in use";
-                return View();
-            }
-            else
-            {
                 if (ModelState.IsValid)
                 {
                     var salt = PasswordHash.CreateSalt();
@@ -80,12 +63,27 @@ namespace Web_Project2.Controllers
                     user.Password = hash;
                     user.UUID = UniqueIdentifier;
                     user.Role_ID = 2;
-                    db.Users.Add(user);
-                    db.SaveChanges();
+                    //db.Users.Add(user);
+                    //db.SaveChanges();
+
+                    var userBlock = new ParseUser()
+                    {
+                        Username = "my name",
+                        Password = "my pass",
+                        Email = "email@example.com"
+                    };
+
+                    // other fields can be set just like with ParseObject
+                    userBlock["phone"] = "415-392-0202";
+
+                
+                    await userBlock.SignUpAsync();
+                    
+       
                     return RedirectToAction("Index");
                 }
-                return View(user);
-            }
+                return View();
+            //}
         }
 
 
@@ -94,12 +92,12 @@ namespace Web_Project2.Controllers
 
         public ActionResult Edit(Guid id)
         {
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //User user = db.Users.Find(id);
+           // if (user == null)
+           // {
+           //     return HttpNotFound();
+           // }
+            return View();
         }
 
         //
@@ -111,8 +109,8 @@ namespace Web_Project2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+               // db.Entry(user).State = EntityState.Modified;
+               // db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(user);
@@ -123,12 +121,12 @@ namespace Web_Project2.Controllers
 
         public ActionResult Delete(Guid id)
         {
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //User user = db.Users.Find(id);
+         //   if (user == null)
+           // {
+           //     return HttpNotFound();
+           // }
+            return View();
         }
 
         //
@@ -138,16 +136,11 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+           // User user = db.Users.Find(id);
+            //db.Users.Remove(user);
+            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
     }
 }

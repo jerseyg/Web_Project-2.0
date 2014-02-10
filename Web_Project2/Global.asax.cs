@@ -25,7 +25,7 @@ namespace Web_Project2
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //Initialize Parse.com 
-            ParseClient.Initialize("MX4GHNl1CUnwc12GB3hWUdgCd8cKETINd5RCtjV6", "v1BwiivLEj5UZ5R9odfbU1X10R9Ias4tEHOJtDI0");
+            ParseClient.Initialize("MXtZWjQd43oVRapHHfQ213Kls6EavtWpNrKez1lr", "Ew5iZztAoPxCh9PATc3PDmexEuBmIdY6BHYn5YTj");
         }
     }
 }

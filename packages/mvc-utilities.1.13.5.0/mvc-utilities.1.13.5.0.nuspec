@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>mvc-utilities</id>
+    <version>1.13.5.0</version>
+    <title>MVC.Utilities</title>
+    <authors>Aaron Stannard</authors>
+    <owners>Aaron Stannard</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Utility classes designed for ASP.NET MVC; deals with encryption, routing, caching, authorization, and various other security issues. Designed by used with Dependency Injection.</description>
+    <releaseNotes />
+    <copyright />
+    <language>en-US</language>
+    <tags>MVC ASP.NET MVC3 MVC4 Cache Hashing Encryption LowercaseRoute Routing Azure AppFabric Memcached</tags>
+    <references>
+      <reference file="MVC.Utilities.dll" />
+    </references>
+  </metadata>
+</package>
