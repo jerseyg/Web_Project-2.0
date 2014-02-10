@@ -1,0 +1,128 @@
+﻿
+@{
+   
+}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="a website to help with invitations">
+    <meta name="author" content="Jersey Galapon">
+    <meta name="keywords" content="RSVP, invite, cool, internet, electronic" />
+    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+
+    <title>eRespond­®</title>
+
+    <!-- Bootstrap core CSS -->
+
+    @Styles.Render("~/Content/bootstrap")
+      @Styles.Render("~/Content/themes/base/css")
+    
+  </head>
+
+  <body>
+<nav>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          @Html.ActionLink("eRespond­®","index","Home","Home", new{@class="navbar-brand logofont"})
+        </div>
+
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Home", "index", "Home")</li>
+            <li>@Html.ActionLink("Services", "Services", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "index", "Home")</li>
+          </ul>
+@*@using (Html.BeginForm("Login", "Account", FormMethod.Post, new {@class = "navbar-form navbar-right", id = "hideme"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+
+
+       
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+   
+            <input type="submit" class="btn btn-susdccess" value="Login">
+}*@
+    <div class="loginsignup">
+      <a href="/App/Login"><button class="btn btn-primary">Login!</button></a>
+      <a href="/Account/Create"><button class="btn btn-primary">SignUp!</button></a>
+    </div>
+        </div><!--/.navbar-collapse -->
+
+      </div>
+    </div>
+ </nav>
+
+    @RenderBody()
+
+      <hr>
+
+      <footer class="foo">
+      <ul class="foot">
+            <li class="line">@Html.ActionLink("Home", "index", "Home")</li>
+            <li class="line">@Html.ActionLink("Services", "Services", "Home")</li>
+            <li class="line">@Html.ActionLink("About", "About", "Home")</li>
+            <li class="line">@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li class="line">@Html.ActionLink("Sitemap", "Sitemap", "Home")</li>
+      </ul>
+
+  	<script>
+  	    (function () {
+  	        var cx = '005588287786173065120:l0naixfkufi';
+  	        var gcse = document.createElement('script');
+  	        gcse.type = 'text/javascript';
+  	        gcse.async = true;
+  	        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                '//www.google.com/cse/cse.js?cx=' + cx;
+  	        var s = document.getElementsByTagName('script')[0];
+  	        s.parentNode.insertBefore(gcse, s);
+  	    })();
+</script>
+<gcse:search></gcse:search>
+
+	
+
+        <p>&copy; Company 2013</p>
+      </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+      @Scripts.Render("~/bundles/jqueryval")
+      @Scripts.Render("~/bundles/modernizr")
+      <script>
+          $(document).ready(function () {
+              if ($(window).width() < 768) {
+                  $("#hideme").show();
+                  $(".loginsignup").hide();
+              }
+              else {
+                  $("#hideme").hide();
+                  
+              }
+             
+          });
+      </script>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+  </body>
+</html>

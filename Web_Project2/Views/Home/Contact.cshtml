@@ -1,0 +1,38 @@
+﻿@model Web_Project2.Models.Account
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="contact_us">
+<h1>Contact Us</h1>
+<div class="row clearfix">
+    <div class="borderpad">
+
+        <div class="col-md-12 column">
+@using (Html.BeginForm("Contact", "Home", FormMethod.Post, new {role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+       
+            @Html.Label("Name", new{@for= "Name.Name"})
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        
+
+        
+            @Html.Label("Email", new{@for= "Email.Email"})
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        
+        
+            @Html.Label("Message", new{@for= "Text.Text"})
+            @Html.EditorFor(model => model.Text)
+        
+            <input type="submit" class="btn btn-susdccess" value="Send">
+}
+
+        </div>
+        </div>
+      </div>
+</div>

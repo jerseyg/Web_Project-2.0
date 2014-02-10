@@ -1,0 +1,127 @@
+@font-face {
+    font-family: logo;
+    src: url(Bellerose.ttf) format("truetype");
+}
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+
+}
+.topinfo{
+		  padding: 30px;
+  margin-bottom: 30px;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 2.1428571435;
+  color: inherit;
+  background-color: #8fc2ea;
+}
+.img{
+	display:block;
+	float: right;
+  margin-top: auto;
+}
+
+.intro{
+text-align: center;
+float:left;
+max-width: 500px;
+}
+
+.foot{
+	list-style-type:none;
+	display:inline;
+margin:0;
+padding:0;
+}
+
+.line{
+	display:inline;
+}
+
+.lastinfo{
+	text-align: center;
+padding: 30px;
+  margin-bottom: 30px;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 2.1428571435;
+  color: inherit;
+}
+.clear { clear: both;}
+
+.foo{
+	text-align:center;
+}
+
+.contact_us{
+  padding: 10px;
+  margin: 10px;
+
+}
+
+.area{
+  width: 500px;
+  height: 500px;
+  resize:none;
+}
+
+.random{
+
+  background-color: #eeeeee;
+}
+.center{
+  text-align: center;
+}
+
+.borderpad {
+    width: 70%;
+    display: block;
+    margin-top: 65px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginsignup {
+position: absolute;
+top:12px;
+right: 20px;
+}
+
+.login{
+    padding: 20px;
+}
+
+.aboutcrumb{
+      padding: 10px;
+      margin: 10px;
+      background-color: #8fc2ea;
+    }
+
+.strike{
+    text-decoration: line-through;
+}
+
+.trade{
+font-size:small;
+}
+
+.firstlogo{
+    margin-top: -1000px;
+    font-family:logo;
+    font-size: 150px;
+    font-weight:bold;
+    color:#0962a7;
+}
+
+.logofont{
+    font-family:logo;
+    font-weight:900;
+    font-size:25px;
+    margin-top: -12px;
+}
+
+.search{
+    width:50%;
+}
