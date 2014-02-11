@@ -8,8 +8,6 @@ namespace Web_Project2.Models
 {
     public class User
     {
-        [Key]
-        public System.Guid UUID { get; set; }
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
