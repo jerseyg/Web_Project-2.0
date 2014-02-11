@@ -57,24 +57,25 @@ namespace Web_Project2.Controllers
                     byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
                     var hash = PasswordHash.CreateHash(user.Password, byteArraySalt);
 
-                    Guid UniqueIdentifier = Guid.NewGuid();
+                    //Guid UniqueIdentifier = Guid.NewGuid();
 
                     user.Salt = salt;
                     user.Password = hash;
-                    user.UUID = UniqueIdentifier;
+                    //user.UUID = UniqueIdentifier;
                     user.Role_ID = 2;
                     //db.Users.Add(user);
                     //db.SaveChanges();
 
                     var userBlock = new ParseUser()
                     {
-                        Username = "my name",
-                        Password = "my pass",
-                        Email = "email@example.com"
+                        Username = user.EmailAddress,
+                        Password = user.Password,
+                        Email = user.EmailAddress
                     };
 
                     // other fields can be set just like with ParseObject
-                    userBlock["phone"] = "415-392-0202";
+                    userBlock["Salt"] = user.Salt;
+                    userBlock["Role_ID"] = 2;
 
                 
                     await userBlock.SignUpAsync();
