@@ -20,16 +20,16 @@ namespace Web_Project2.Controllers
 
         public ActionResult Index()
         {
-            try
+            if (ParseUser.CurrentUser != null)
             {
                 ViewData["User"] = ParseUser.CurrentUser.Username;
-            }
-            catch(NullReferenceException)
-            {
                 return View();
             }
-           
-            return View();
+            else
+            {
+                return RedirectToAction("Login");
+            }
+            
         }
 
         public ActionResult Login()
@@ -65,7 +65,7 @@ namespace Web_Project2.Controllers
             }
             catch(ParseException)
             {
-                return RedirectToAction("index");
+                return View();
             }
             
         }
