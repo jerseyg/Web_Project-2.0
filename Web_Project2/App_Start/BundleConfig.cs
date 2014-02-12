@@ -45,6 +45,14 @@ namespace Web_Project2
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            //css and javascript bundles
+
+            //Toast Bundle
+            bundles.Add(new ScriptBundle("~/bundles/toast").Include(
+                "~/Content/js/toastr.js"));
+            bundles.Add(new StyleBundle("~/Content/toast").Include(
+                "~/Content/toastr.css"));
         }
     }
 }
