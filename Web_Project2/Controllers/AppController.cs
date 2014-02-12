@@ -57,15 +57,7 @@ namespace Web_Project2.Controllers
 
             byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
             var hash = PasswordHash.CreateHash(nonHashedPassword, byteArraySalt);
-            //bool valid = sql.isValidLogin(user, emailAddress, nonHashedPassword);
 
-            //if (valid)
-           // {
-            //    FormsAuthentication.SetAuthCookie(emailAddress, false);
-            //    return RedirectToAction("Index");
-           // }
-           // else
-           // {
             try
             {
                 await ParseUser.LogInAsync(emailAddress, hash);
@@ -76,15 +68,10 @@ namespace Web_Project2.Controllers
                 return RedirectToAction("index");
             }
             
-
-                
-           // }
-            
         }
         public ActionResult LogOff()
         {
-            FormsAuthentication.SignOut();
-
+            ParseUser.LogOut();
             return RedirectToAction("Index", "Home");
         }
     }
