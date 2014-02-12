@@ -50,7 +50,7 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(User user)
         {
-
+        
                 if (ModelState.IsValid)
                 {
                     var salt = PasswordHash.CreateSalt();
@@ -77,11 +77,23 @@ namespace Web_Project2.Controllers
                     userBlock["Salt"] = user.Salt;
                     userBlock["Role_ID"] = 2;
 
-                
-                    await userBlock.SignUpAsync();
+
+                    try
+                    {
+                        await userBlock.SignUpAsync();
+                        ViewData["flag"] = "success";
+                        await ParseUser.LogInAsync(user.EmailAddress, user.Password);
+                        return View();
+                    }
+                    catch (ParseException)
+                    {
+                        ViewData["flag"] = "Failed";
+                        return View();
+                    }
+                    
                     
        
-                    return RedirectToAction("Index");
+                   
                 }
                 return View();
             //}
