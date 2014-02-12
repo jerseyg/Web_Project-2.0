@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Parse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -18,7 +20,15 @@ namespace Web_Project2.Controllers
 
         public ActionResult Index()
         {
-    
+            try
+            {
+                ViewData["User"] = ParseUser.CurrentUser.Username;
+            }
+            catch(NullReferenceException)
+            {
+                return View();
+            }
+           
             return View();
         }
 
@@ -29,13 +39,24 @@ namespace Web_Project2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(User user)
+        public async Task<ActionResult> Login(User user)
         {
-            SQL sql = new SQL();
+        
 
             string emailAddress = user.EmailAddress;
             string nonHashedPassword = user.Password;
 
+            var query = await (from getUser in ParseUser.Query
+                              where getUser.Get<string>("username") == emailAddress
+                              select getUser).FindAsync();
+
+            //TODO: add to check if user exists before adding info to variables
+
+            var firstUser = query.First();
+            var salt = firstUser.Get<string>("Salt");
+
+            byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
+            var hash = PasswordHash.CreateHash(nonHashedPassword, byteArraySalt);
             //bool valid = sql.isValidLogin(user, emailAddress, nonHashedPassword);
 
             //if (valid)
@@ -45,7 +66,18 @@ namespace Web_Project2.Controllers
            // }
            // else
            // {
-                return View();
+            try
+            {
+                await ParseUser.LogInAsync(emailAddress, hash);
+                return RedirectToAction("index");
+            }
+            catch(ParseException)
+            {
+                return RedirectToAction("index");
+            }
+            
+
+                
            // }
             
         }
