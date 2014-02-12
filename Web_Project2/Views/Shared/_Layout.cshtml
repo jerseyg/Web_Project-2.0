@@ -19,6 +19,9 @@
 
     @Styles.Render("~/Content/bootstrap")
       @Styles.Render("~/Content/themes/base/css")
+      @Styles.Render("~/Content/toast")
+
+
     
   </head>
 
@@ -43,26 +46,20 @@
             <li>@Html.ActionLink("About", "About", "Home")</li>
             <li>@Html.ActionLink("Contact", "index", "Home")</li>
           </ul>
-@*@using (Html.BeginForm("Login", "Account", FormMethod.Post, new {@class = "navbar-form navbar-right", id = "hideme"}))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
 
-
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-
-
-       
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-   
-            <input type="submit" class="btn btn-susdccess" value="Login">
-}*@
+    @if (Parse.ParseUser.CurrentUser != null) {
+    <div class="loginsignup">
+      <a href=""><button class="btn btn-primary">@Parse.ParseUser.CurrentUser.Username</button></a>
+      <a href="/App/Logoff"><button class="btn btn-primary">Logout</button></a>
+    </div>
+    }
+    else
+    {
     <div class="loginsignup">
       <a href="/App/Login"><button class="btn btn-primary">Login!</button></a>
       <a href="/Account/Create"><button class="btn btn-primary">SignUp!</button></a>
     </div>
+    }
         </div><!--/.navbar-collapse -->
 
       </div>
@@ -89,6 +86,7 @@
     @Scripts.Render("~/bundles/bootstrap")
       @Scripts.Render("~/bundles/jqueryval")
       @Scripts.Render("~/bundles/modernizr")
+      @Scripts.Render("~/bundles/toast")
       <script>
           $(document).ready(function () {
               if ($(window).width() < 768) {
@@ -99,6 +97,7 @@
                   $("#hideme").hide();
                   
               }
+              
              
           });
       </script>
