@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Login</h2>
 
-@using (Html.BeginForm("Login", "App", FormMethod.Post, new { @class = "login" , name = "login"}))
+@*@using (Html.BeginForm("Login", "App", FormMethod.Post, new { @class = "login" , name = "login"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -35,5 +34,19 @@
             <input type="submit" value="Login" />
         </p>
     </fieldset>
-}
+}*@
+
+<div class="loginContainer">
+
+    <form class="form-signin" role="form">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required>
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+</div> <!-- /container -->
 @ViewBag.Exists

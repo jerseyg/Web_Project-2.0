@@ -6,12 +6,12 @@
 
 <h2>Create</h2>
 @ViewData["flag"]
-@using (Html.BeginForm()) {
+@*@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>User</legend>
+     
 
         <div class="editor-label">
             @Html.LabelFor(model => model.EmailAddress)
@@ -50,8 +50,23 @@
             <input type="submit" value="Create" />
         </p>
     </fieldset>
-}
+}*@
+<div class="loginContainer">
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <form class="form-signin" role="form">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required>
+        <input type="password" class="form-control" placeholder="Password" required>
+
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
