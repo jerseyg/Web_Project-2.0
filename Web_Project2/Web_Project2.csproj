@@ -232,6 +232,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\Bellerose.ttf" />
     <Content Include="Content\css\toastr.less" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="LICENSE.txt" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -270,7 +271,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
     <Content Include="Views\App\Index.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
@@ -278,6 +279,9 @@
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\App\Login.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FirstName.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\LastName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
