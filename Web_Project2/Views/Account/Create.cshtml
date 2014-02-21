@@ -16,15 +16,18 @@
         <h2 class="form-signin-heading">Please sign in</h2>
                     @ViewBag.Exists
          @Html.ValidationMessageFor(model => model.EmailAddress)
-                    @Html.EditorFor(model => model.EmailAddress)        
+                    @Html.EditorFor(model => model.EmailAddress, null, "")        
                    
          @Html.ValidationMessageFor(model => model.Password)
-                    @Html.EditorFor(model => model.Password)
+                    @Html.EditorFor(model => model.Password, null, "")
+         @Html.ValidationMessageFor(model => model.RetypePassword)
+                    @Html.EditorFor(model => model.RetypePassword, null, "")
                     
-                    @Html.EditorFor(model => model.FirstName)
-                    @Html.EditorFor(model => model.LastName)
+                    @Html.EditorFor(model => model.FirstName, null, "")
+                    @Html.EditorFor(model => model.LastName, null, "")
 
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>        
     }
 
+</div>
