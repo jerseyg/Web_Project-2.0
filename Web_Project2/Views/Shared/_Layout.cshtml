@@ -18,7 +18,7 @@
     <!-- Bootstrap core CSS -->
 
     @Styles.Render("~/Content/bootstrap")
-    @Styles.Render("~/Content/themes/base/css")
+    @*@Styles.Render("~/Content/themes/base/css")*@
     @Styles.Render("~/Content/toast")
 
 
@@ -44,11 +44,21 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/App/Login">Login</a></li>
-                    <li><a href="/Account/Create">Signup</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
+                @if (Parse.ParseUser.CurrentUser != null)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/App/Login"> TODO:: First Name Last Name</a></li>
+                        <li><a href="/Account/Create">Logout</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/App/Login">Login</a></li>
+                        <li><a href="/Account/Create">Signup</a></li>
+                    </ul>
+                }
+            </div>
         </div>
     </div>
 </nav>
@@ -68,8 +78,8 @@
       </footer>
     
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")*@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/toast")
 
