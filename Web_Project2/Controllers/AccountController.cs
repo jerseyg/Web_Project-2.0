@@ -64,8 +64,10 @@ namespace Web_Project2.Controllers
                     };
 
                     // other fields can be set just like with ParseObject
-                    userBlock["Salt"] = user.Salt;
-                    userBlock["Role_ID"] = 2;
+                    userBlock["firstName"] = user.FirstName;
+                    userBlock["lastName"] = user.LastName;
+                    userBlock["salt"] = user.Salt;
+                    userBlock["role_ID"] = 2;
 
 
                     try
@@ -73,7 +75,7 @@ namespace Web_Project2.Controllers
                         await userBlock.SignUpAsync();
                         ViewData["flag"] = "success";
                         await ParseUser.LogInAsync(user.EmailAddress, user.Password);
-                        return View();
+                        return RedirectToAction("index", "App");
                     }
                     catch (ParseException)
                     {
