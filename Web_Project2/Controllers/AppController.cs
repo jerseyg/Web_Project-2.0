@@ -22,8 +22,7 @@ namespace Web_Project2.Controllers
         {
             if (ParseUser.CurrentUser != null)
             {
-                ViewData["User"] = ParseUser.CurrentUser.Username;
-                return View();
+                return View(Session["UserProfile"]);
             }
             else
             {
@@ -41,38 +40,61 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(User user)
         {
-        
+            UserDbContext db = new UserDbContext();
 
-            string emailAddress = user.EmailAddress;
-            string nonHashedPassword = user.Password;
 
-            var query = await (from getUser in ParseUser.Query
-                              where getUser.Get<string>("username") == emailAddress
-                              select getUser).FindAsync();
+                bool login = await db.login(user);
 
-            //TODO: add to check if user exists before adding info to variables
-
-            var firstUser = query.First();
-            var salt = firstUser.Get<string>("Salt");
-
-            byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
-            var hash = PasswordHash.CreateHash(nonHashedPassword, byteArraySalt);
-
-            try
-            {
-                await ParseUser.LogInAsync(emailAddress, hash);
-                return RedirectToAction("index");
-            }
-            catch(ParseException)
-            {
-                return View();
-            }
+                if (login != false)
+                {
+                    //Creates a Session key called "UserProfile"
+                    await CreateSession(user.EmailAddress);
+                    return RedirectToAction("index");
+                }
+                else
+                {
+                    return View();
+                }
+                
+            
             
         }
         public ActionResult LogOff()
         {
+            Session.Abandon();
             ParseUser.LogOut();
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task CreateSession(string EmailAddress)
+        {
+            try
+            {
+                var query = await (from getUser in ParseUser.Query
+                                   where getUser.Get<string>("username") == EmailAddress
+                                   select getUser).FindAsync();
+
+                var firstUser = query.First();
+
+                var profileData = new SessionProfile()
+                {
+                    parseID = firstUser.ObjectId,
+                    EmailAddress = firstUser.Get<string>("username"),
+                    fullName = firstUser.Get<string>("firstName") + " " + firstUser.Get<string>("lastName")
+                };
+
+                this.Session["UserProfile"] = profileData;
+            }
+
+            catch (ParseException e)
+            {
+                //TO:DO Find a way to handle user not found in database
+
+                Session.Abandon();
+            }
+
+
+        }
+
     }
 }
