@@ -4,54 +4,30 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+
 @ViewData["flag"]
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>User</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EmailAddress)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EmailAddress)
-            @ViewBag.Exists
-            @Html.ValidationMessageFor(model => model.EmailAddress)
-        </div>
+<div class="loginContainer">
+    @using (Html.BeginForm("Create", "Account", FormMethod.Post, new {@class = "form-signin", role = "form"}))
+    {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+        <h2 class="form-signin-heading">Please sign in</h2>
+                    @ViewBag.Exists
+         @Html.ValidationMessageFor(model => model.EmailAddress)
+                    @Html.EditorFor(model => model.EmailAddress, null, "")        
+                   
+         @Html.ValidationMessageFor(model => model.Password)
+                    @Html.EditorFor(model => model.Password, null, "")
+         @Html.ValidationMessageFor(model => model.RetypePassword)
+                    @Html.EditorFor(model => model.RetypePassword, null, "")
+                    
+                    @Html.EditorFor(model => model.FirstName, null, "")
+                    @Html.EditorFor(model => model.LastName, null, "")
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.FirstName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.FirstName)
-            @Html.ValidationMessageFor(model => model.FirstName)
-        </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>        
+    }
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LastName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.LastName)
-            @Html.ValidationMessageFor(model => model.LastName)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>

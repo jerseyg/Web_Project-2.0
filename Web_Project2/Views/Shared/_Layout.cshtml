@@ -1,6 +1,6 @@
 ﻿
 @{
-   
+   Web_Project2.Models.SessionProfile profile = (Web_Project2.Models.SessionProfile) HttpContext.Current.Session["UserProfile"];
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -18,8 +18,8 @@
     <!-- Bootstrap core CSS -->
 
     @Styles.Render("~/Content/bootstrap")
-      @Styles.Render("~/Content/themes/base/css")
-      @Styles.Render("~/Content/toast")
+    @*@Styles.Render("~/Content/themes/base/css")*@
+    @Styles.Render("~/Content/toast")
 
 
     
@@ -28,47 +28,42 @@
   <body>
 <nav>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-          </button>
-          @Html.ActionLink("eRespond­®","index","Home","Home", new{@class="navbar-brand logofont"})
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logofont" href="#">eRespond­®</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                @if (Parse.ParseUser.CurrentUser != null)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/Account/Detail">@profile.fullName</a></li>
+                        <li><a href="/App/Logoff">Logout</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/App/Login">Login</a></li>
+                        <li><a href="/Account/Create">Signup</a></li>
+                    </ul>
+                }
+            </div>
         </div>
-
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li>@Html.ActionLink("Home", "index", "Home")</li>
-            <li>@Html.ActionLink("About", "About", "Home")</li>
-            <li>@Html.ActionLink("Contact", "index", "Home")</li>
-          </ul>
-
-    @if (Parse.ParseUser.CurrentUser != null) {
-    <div class="loginsignup">
-      <a href=""><button class="btn btn-primary">@Parse.ParseUser.CurrentUser.Username</button></a>
-      <a href="/App/Logoff"><button class="btn btn-primary">Logout</button></a>
     </div>
-    }
-    else
-    {
-    <div class="loginsignup">
-      <a href="/App/Login"><button class="btn btn-primary">Login!</button></a>
-      <a href="/Account/Create"><button class="btn btn-primary">SignUp!</button></a>
-    </div>
-    }
-        </div><!--/.navbar-collapse -->
-
-      </div>
-    </div>
- </nav>
-
+</nav>
     @RenderBody()
 
-      <hr>
 
       <footer class="foo">
       <ul class="foot">
@@ -83,23 +78,10 @@
       </footer>
     
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-      @Scripts.Render("~/bundles/jqueryval")
-      @Scripts.Render("~/bundles/modernizr")
-      @Scripts.Render("~/bundles/toast")
-      <script>
-          $(document).ready(function () {
-              if ($(window).width() < 768) {
-                  $("#hideme").show();
-                  $(".loginsignup").hide();
-              }
-              else {
-                  $("#hideme").hide();
-                  
-              }
-              
-             
-          });
-      </script>
+    @*@Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")*@
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/toast")
+
   </body>
 </html>

@@ -4,36 +4,35 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="loginContainer">
 
-<h2>Login</h2>
+    @using (Html.BeginForm("Login", "App", FormMethod.Post, new { @class = "login", name = "login" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
 
-@using (Html.BeginForm("Login", "App", FormMethod.Post, new { @class = "login" , name = "login"}))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Account</legend>
+        <h2 class="form-signin-heading">Account</h2>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EmailAddress)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EmailAddress)
-            @Html.ValidationMessageFor(model => model.EmailAddress)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
+        @Html.LabelFor(model => model.EmailAddress)
+        @Html.ValidationMessageFor(model => model.EmailAddress)
+        @Html.EditorFor(model => model.EmailAddress, null, "")
 
-        <p>
-            <input type="submit" value="Login" />
-        </p>
-    </fieldset>
-}
+
+        @Html.LabelFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+        @Html.EditorFor(model => model.Password, null, "")
+
+
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+
+    }
+
+</div> <!-- /container -->
 @ViewBag.Exists

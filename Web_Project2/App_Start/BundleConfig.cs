@@ -8,7 +8,8 @@ namespace Web_Project2
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            BundleTable.EnableOptimizations = true;
+            bundles.Add(new ScriptBundle("~/bundles/jquery", "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js").Include(
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
@@ -25,14 +26,14 @@ namespace Web_Project2
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
+            bundles.Add(new StyleBundle("~/Content/bootstrap",  "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css").Include(
                 "~/Content/css/bootstrap.css",
                 "~/Content/jumbotron.css"));
             bundles.Add(new StyleBundle("~/Content/Pixelkit").Include(
                 "~/Content/css/Pixelkit.css"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+            bundles.Add(new StyleBundle("~/Content/themes/base/css", "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
                         "~/Content/themes/base/jquery.ui.resizable.css",
                         "~/Content/themes/base/jquery.ui.selectable.css",
@@ -46,13 +47,13 @@ namespace Web_Project2
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
 
-            //css and javascript bundles
+            
 
             //Toast Bundle
             bundles.Add(new ScriptBundle("~/bundles/toast").Include(
                 "~/Content/js/toastr.js"));
             bundles.Add(new StyleBundle("~/Content/toast").Include(
-                "~/Content/toastr.css"));
+                "~/Content/css/toastr.css"));
         }
     }
 }

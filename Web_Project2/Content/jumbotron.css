@@ -6,7 +6,14 @@
 body {
   padding-top: 50px;
   padding-bottom: 20px;
-
+      background:
+radial-gradient(black 15%, transparent 16%) 0 0,
+radial-gradient(black 15%, transparent 16%) 8px 8px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+background-color:#282828;
+background-size:16px 16px;
+color: #fff;
 }
 .topinfo{
 		  padding: 30px;
@@ -52,6 +59,7 @@ padding: 30px;
 .clear { clear: both;}
 
 .foo{
+    margin-top:20px;
 	text-align:center;
 }
 
@@ -124,4 +132,10 @@ font-size:small;
 
 .search{
     width:50%;
+}
+
+.loginContainer {
+    width: 325px;
+       margin-left: auto;
+    margin-right: auto;
 }

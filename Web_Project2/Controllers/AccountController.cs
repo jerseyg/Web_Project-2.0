@@ -20,18 +20,10 @@ namespace Web_Project2.Controllers
     public class AccountController : Controller
     {
         public const int SALT_BYTE_SIZE = 24;
-       // private Models_ db = new Models_();
 
-        //
-        // GET: /Account/Details/5
 
         public ActionResult Details(Guid id)
         {
-            //User user = db.Users.Find(id);
-            //if (user == null)
-            //{
-            //    return HttpNotFound();
-            //}
             return View();
         }
 
@@ -57,14 +49,12 @@ namespace Web_Project2.Controllers
                     byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
                     var hash = PasswordHash.CreateHash(user.Password, byteArraySalt);
 
-                    //Guid UniqueIdentifier = Guid.NewGuid();
 
                     user.Salt = salt;
                     user.Password = hash;
-                    //user.UUID = UniqueIdentifier;
+ 
                     user.Role_ID = 2;
-                    //db.Users.Add(user);
-                    //db.SaveChanges();
+
 
                     var userBlock = new ParseUser()
                     {
@@ -74,8 +64,10 @@ namespace Web_Project2.Controllers
                     };
 
                     // other fields can be set just like with ParseObject
-                    userBlock["Salt"] = user.Salt;
-                    userBlock["Role_ID"] = 2;
+                    userBlock["firstName"] = user.FirstName;
+                    userBlock["lastName"] = user.LastName;
+                    userBlock["salt"] = user.Salt;
+                    userBlock["role_ID"] = 2;
 
 
                     try
@@ -83,7 +75,7 @@ namespace Web_Project2.Controllers
                         await userBlock.SignUpAsync();
                         ViewData["flag"] = "success";
                         await ParseUser.LogInAsync(user.EmailAddress, user.Password);
-                        return View();
+                        return RedirectToAction("index", "App");
                     }
                     catch (ParseException)
                     {
