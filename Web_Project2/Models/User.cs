@@ -61,6 +61,49 @@ namespace Web_Project2.Models
             }
             
         }
-    }
+        public async Task<Boolean> CreateUser(User user)
+        {
 
+                var salt = PasswordHash.CreateSalt();
+                byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
+                var hash = PasswordHash.CreateHash(user.Password, byteArraySalt);
+
+
+                user.Salt = salt;
+                user.Password = hash;
+                user.Role_ID = 2;
+
+
+                var userBlock = new ParseUser()
+                {
+                    Username = user.EmailAddress,
+                    Password = user.Password,
+                    Email = user.EmailAddress
+                };
+
+                // other fields can be set just like with ParseObject
+                userBlock["firstName"] = user.FirstName;
+                userBlock["lastName"] = user.LastName;
+                userBlock["salt"] = user.Salt;
+                userBlock["role_ID"] = user.Role_ID;
+
+
+                try
+                {
+                    await userBlock.SignUpAsync();
+                    return true;
+                }
+                catch (ParseException)
+                {
+                   
+                    return false;
+                }
+
+
+
+
+           }
+            
+        }
 }
+
