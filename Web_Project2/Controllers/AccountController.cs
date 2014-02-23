@@ -42,49 +42,21 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(User user)
         {
-        
+            UserDbContext db = new UserDbContext();
+
                 if (ModelState.IsValid)
                 {
-                    var salt = PasswordHash.CreateSalt();
-                    byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
-                    var hash = PasswordHash.CreateHash(user.Password, byteArraySalt);
-
-
-                    user.Salt = salt;
-                    user.Password = hash;
- 
-                    user.Role_ID = 2;
-
-
-                    var userBlock = new ParseUser()
+                    bool create = await db.CreateUser(user);
+                    if (create != false)
                     {
-                        Username = user.EmailAddress,
-                        Password = user.Password,
-                        Email = user.EmailAddress
-                    };
-
-                    // other fields can be set just like with ParseObject
-                    userBlock["firstName"] = user.FirstName;
-                    userBlock["lastName"] = user.LastName;
-                    userBlock["salt"] = user.Salt;
-                    userBlock["role_ID"] = 2;
-
-
-                    try
-                    {
-                        await userBlock.SignUpAsync();
-                        ViewData["flag"] = "success";
-                        await ParseUser.LogInAsync(user.EmailAddress, user.Password);
+                        await db.login(user);
+                        await CreateSessionProfile(user.EmailAddress);
                         return RedirectToAction("index", "App");
                     }
-                    catch (ParseException)
+                    else
                     {
-                        ViewData["flag"] = "Failed";
                         return View();
                     }
-                    
-                    
-       
                    
                 }
                 return View();
@@ -147,5 +119,34 @@ namespace Web_Project2.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task CreateSessionProfile(string EmailAddress)
+        {
+            try
+            {
+                var query = await (from getUser in ParseUser.Query
+                                   where getUser.Get<string>("username") == EmailAddress
+                                   select getUser).FindAsync();
+
+                var firstUser = query.First();
+
+                var profileData = new SessionProfile()
+                {
+                    parseID = firstUser.ObjectId,
+                    EmailAddress = firstUser.Get<string>("username"),
+                    fullName = firstUser.Get<string>("firstName") + " " + firstUser.Get<string>("lastName")
+                };
+
+                Session["UserProfile"] = profileData;
+            }
+
+            catch (ParseException e)
+            {
+                //TO:DO Find a way to handle user not found in database
+
+                Session.Abandon();
+            }
+
+
+        }
     }
 }

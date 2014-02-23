@@ -48,7 +48,7 @@ namespace Web_Project2.Controllers
                 if (login != false)
                 {
                     //Creates a Session key called "UserProfile"
-                    await CreateSession(user.EmailAddress);
+                    await CreateSessionProfile(user.EmailAddress);
                     return RedirectToAction("index");
                 }
                 else
@@ -66,7 +66,7 @@ namespace Web_Project2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task CreateSession(string EmailAddress)
+        public async Task CreateSessionProfile(string EmailAddress)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace Web_Project2.Controllers
                     fullName = firstUser.Get<string>("firstName") + " " + firstUser.Get<string>("lastName")
                 };
 
-                this.Session["UserProfile"] = profileData;
+                Session["UserProfile"] = profileData;
             }
 
             catch (ParseException e)
