@@ -20,7 +20,6 @@ namespace Web_Project2.Models
         [Required]
         [UIHint("Password")]
         public string Password { get; set; }
-        [Required]
         [UIHint("RetypePassword")]
         public string RetypePassword { get; set; }
         public string Salt { get; set; }
@@ -103,7 +102,34 @@ namespace Web_Project2.Models
 
 
            }
-            
+        public async Task<Object> CreateSessionProfile(string EmailAddress)
+        {
+            try
+            {
+                var query = await (from getUser in ParseUser.Query
+                                   where getUser.Get<string>("username") == EmailAddress
+                                   select getUser).FindAsync();
+
+                var firstUser = query.First();
+
+                var profileData = new SessionProfile()
+                {
+                    parseID = firstUser.ObjectId,
+                    EmailAddress = firstUser.Get<string>("username"),
+                    fullName = firstUser.Get<string>("firstName") + " " + firstUser.Get<string>("lastName")
+                };
+
+                return profileData;
+            }
+
+            catch (ParseException e)
+            {
+                //TO:DO Find a way to handle user not found in database               
+                return e;
+            }
+
+
         }
+    }
 }
 

@@ -50,7 +50,9 @@ namespace Web_Project2.Controllers
                     if (create != false)
                     {
                         await db.login(user);
-                        await CreateSessionProfile(user.EmailAddress);
+                        var UserProfile = await db.CreateSessionProfile(user.EmailAddress);
+                        Session["UserProfile"] = UserProfile;
+
                         return RedirectToAction("index", "App");
                     }
                     else
@@ -119,34 +121,6 @@ namespace Web_Project2.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task CreateSessionProfile(string EmailAddress)
-        {
-            try
-            {
-                var query = await (from getUser in ParseUser.Query
-                                   where getUser.Get<string>("username") == EmailAddress
-                                   select getUser).FindAsync();
-
-                var firstUser = query.First();
-
-                var profileData = new SessionProfile()
-                {
-                    parseID = firstUser.ObjectId,
-                    EmailAddress = firstUser.Get<string>("username"),
-                    fullName = firstUser.Get<string>("firstName") + " " + firstUser.Get<string>("lastName")
-                };
-
-                Session["UserProfile"] = profileData;
-            }
-
-            catch (ParseException e)
-            {
-                //TO:DO Find a way to handle user not found in database
-
-                Session.Abandon();
-            }
-
-
-        }
+     
     }
 }
