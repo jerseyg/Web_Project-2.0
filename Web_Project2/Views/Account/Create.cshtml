@@ -13,17 +13,20 @@
     {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">Create an Account</h2>
                     @ViewBag.Exists
+        @Html.LabelFor(model => model.EmailAddress)
          @Html.ValidationMessageFor(model => model.EmailAddress)
                     @Html.EditorFor(model => model.EmailAddress, null, "")        
-                   
+                   @Html.LabelFor(model => model.Password)
          @Html.ValidationMessageFor(model => model.Password)
                     @Html.EditorFor(model => model.Password, null, "")
+        @Html.LabelFor(model => model.RetypePassword)
          @Html.ValidationMessageFor(model => model.RetypePassword)
                     @Html.EditorFor(model => model.RetypePassword, null, "")
-                    
+                    @Html.LabelFor(model => model.FirstName)
                     @Html.EditorFor(model => model.FirstName, null, "")
+        @Html.LabelFor(model => model.LastName)
                     @Html.EditorFor(model => model.LastName, null, "")
 
 

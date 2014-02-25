@@ -16,11 +16,13 @@
 
 
         @Html.LabelFor(model => model.EmailAddress)
+        <br/>
         @Html.ValidationMessageFor(model => model.EmailAddress)
         @Html.EditorFor(model => model.EmailAddress, null, "")
 
 
         @Html.LabelFor(model => model.Password)
+        <br/>
         @Html.ValidationMessageFor(model => model.Password)
         @Html.EditorFor(model => model.Password, null, "")
 
