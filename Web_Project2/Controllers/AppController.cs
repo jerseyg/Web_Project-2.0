@@ -13,21 +13,15 @@ using Web_Project2.Models;
 
 namespace Web_Project2.Controllers
 {
+    
     public class AppController : Controller
     {
         //
         // GET: /App/
-
+        [ParseLogin]
         public ActionResult Index()
         {
-            if (ParseUser.CurrentUser != null)
-            {
-                return View(Session["UserProfile"]);
-            }
-            else
-            {
-                return RedirectToAction("Login");
-            }
+            return View();
             
         }
 
@@ -62,9 +56,7 @@ namespace Web_Project2.Controllers
             {
                 return View();
             }
-                
-            
-            
+                                       
         }
         public ActionResult LogOff()
         {
@@ -73,8 +65,6 @@ namespace Web_Project2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-       
-
-        }
+    }
 
 }
