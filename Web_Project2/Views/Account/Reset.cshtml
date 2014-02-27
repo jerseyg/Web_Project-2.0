@@ -1,5 +1,28 @@
-﻿@{
+﻿@model Web_Project2.Models.User
+
+@{
     ViewBag.Title = "Reset";
 }
 
 <h2>Reset</h2>
+<div class="loginContainer">
+    @using (Html.BeginForm("Reset", "Account", FormMethod.Post, new { @class = "form-signin", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+
+        @Html.LabelFor(model => model.EmailAddress)
+
+        @Html.EditorFor(model => model.EmailAddress, null, "")
+        @Html.ValidationMessageFor(model => model.EmailAddress)
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
