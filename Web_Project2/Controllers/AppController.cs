@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Web_Project2.Controllers.DatabaseHandler;
 using Web_Project2.ExternalHelper;
 using Web_Project2.Models;
 
@@ -18,11 +17,10 @@ namespace Web_Project2.Controllers
     {
         //
         // GET: /App/
-        [ParseLogin]
+        [ParseLoginCheck]
         public ActionResult Index()
         {
-            return View();
-            
+            return View();        
         }
 
         public ActionResult Login()

@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using System.Security.Cryptography;
 using Web_Project2.Models;
 using Web_Project2.ExternalHelper;
-using Web_Project2.Controllers.DatabaseHandler;
 using System.Text;
 using System.Threading.Tasks;
 using Parse;
@@ -22,7 +21,7 @@ namespace Web_Project2.Controllers
         public const int SALT_BYTE_SIZE = 24;
 
 
-        public ActionResult Details(Guid id)
+        public ActionResult Details(String id)
         {
             return View();
         }
