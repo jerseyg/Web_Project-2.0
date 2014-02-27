@@ -156,6 +156,7 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParseLogin.cs" />
+    <Compile Include="ExternalHelper\MailGunHelper.cs" />
     <Compile Include="ExternalHelper\PasswordHash.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
