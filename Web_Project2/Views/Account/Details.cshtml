@@ -1,8 +1,28 @@
 ﻿@model Web_Project2.Models.User
 
 @{
-    ViewBag.Title = "Details";
+    Web_Project2.Models.SessionProfile profile = (Web_Project2.Models.SessionProfile)HttpContext.Current.Session["UserProfile"];
 }
 
 <h2>Details</h2>
 
+<fieldset>
+    <legend>User</legend>
+
+    <div class="display-label">
+         EmailAddress
+    </div>
+    <div class="display-field">
+        @profile.EmailAddress
+    </div>
+
+    <div class="display-label">
+         Full name
+    </div>
+    <div class="display-field">
+        @profile.firstName @profile.lastName
+    </div>
+
+
+
+</fieldset>
