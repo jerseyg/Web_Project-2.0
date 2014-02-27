@@ -58,20 +58,27 @@ namespace Web_Project2.Controllers
                     else
                     {
                         return View();
-                    }
-                   
+                    }                   
                 }
                 return View();
-            //}
+  
         }
 
 
-        //
-        // GET: /Account/Edit/5
+
         public async Task<ActionResult> Reset()
         {            
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Reset(User user)
+        {
+            MailGunHelper.SendComplexMessage();
+            return View();
+        }
+
+
         public ActionResult Edit(Guid id)
         {
             //User user = db.Users.Find(id);
@@ -124,6 +131,6 @@ namespace Web_Project2.Controllers
             return RedirectToAction("Index");
         }
 
-     
+
     }
 }
