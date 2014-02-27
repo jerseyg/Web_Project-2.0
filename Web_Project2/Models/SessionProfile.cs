@@ -11,6 +11,7 @@ namespace Web_Project2.Models
     {
         public string parseID { get; set; }
         public string EmailAddress { get; set; }
-        public string fullName { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
     }
 }
