@@ -102,6 +102,7 @@ namespace Web_Project2.Models
 
 
            }
+
         public async Task<Object> CreateSessionProfile(string EmailAddress)
         {
             try
@@ -116,7 +117,8 @@ namespace Web_Project2.Models
                 {
                     parseID = firstUser.ObjectId,
                     EmailAddress = firstUser.Get<string>("username"),
-                    fullName = firstUser.Get<string>("firstName") + " " + firstUser.Get<string>("lastName")
+                    firstName = firstUser.Get<string>("firstName"),
+                    lastName = firstUser.Get<string>("lastName")
                 };
 
                 return profileData;
