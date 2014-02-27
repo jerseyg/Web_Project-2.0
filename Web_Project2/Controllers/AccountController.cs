@@ -11,6 +11,7 @@ using Web_Project2.ExternalHelper;
 using System.Text;
 using System.Threading.Tasks;
 using Parse;
+using System.Diagnostics;
 
 
 namespace Web_Project2.Controllers
@@ -20,8 +21,8 @@ namespace Web_Project2.Controllers
     {
         public const int SALT_BYTE_SIZE = 24;
 
-
-        public ActionResult Details(String id)
+        [ParseLoginCheck]
+        public ActionResult Details()
         {
             return View();
         }
@@ -67,7 +68,10 @@ namespace Web_Project2.Controllers
 
         //
         // GET: /Account/Edit/5
-
+        public async Task<ActionResult> Reset()
+        {            
+            return View();
+        }
         public ActionResult Edit(Guid id)
         {
             //User user = db.Users.Find(id);
