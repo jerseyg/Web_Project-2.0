@@ -15,15 +15,15 @@ namespace Web_Project2.Controllers
            
             if (ParseUser.CurrentUser != null)
             {
-                ViewResult result = new ViewResult();
-                result.ViewName = "index";
-                filterContext.Result = result;
+                //ViewResult result = new ViewResult();
+                //result.ViewName = "index";
+                //filterContext.Result = result;
             }
             else
             {
                 ViewResult result = new ViewResult();
                 result.ViewName = "Login";
-                filterContext.Result = result;
+                filterContext.Result = new RedirectResult("/App/Login");
             }
         }
     }
