@@ -10,6 +10,10 @@ namespace Web_Project2.Controllers
 {
     class ParseLoginCheckAttribute : ActionFilterAttribute, IActionFilter
     {
+        /// <summary>
+        /// Attribute Executed before an action call to check if user is logged in.
+        /// </summary>
+        /// <param name="filterContext"></param>
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
            
