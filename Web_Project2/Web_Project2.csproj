@@ -166,11 +166,14 @@
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\Pixelkit.css" />
+    <Content Include="Content\css\toastr.css" />
+    <Content Include="Content\css\toastr.min.css" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\jquery.fittext.js" />
     <Content Include="Content\js\jquery.js" />
     <Content Include="Content\js\toastr.js" />
     <Content Include="Content\jumbotron.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -225,10 +228,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\css\toastr.css" />
-    <Content Include="Content\css\toastr.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\Bellerose.ttf" />
     <Content Include="Content\css\toastr.less" />
     <None Include="Properties\PublishProfiles\Home.pubxml" />
@@ -273,7 +273,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
     <Content Include="Views\App\Index.cshtml" />
-    <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
@@ -283,6 +282,8 @@
     <Content Include="Views\Shared\EditorTemplates\FirstName.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LastName.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RetypePassword.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Account\Reset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
