@@ -156,6 +156,7 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParseLogin.cs" />
+    <Compile Include="Controllers\vApiController.cs" />
     <Compile Include="ExternalHelper\MailGunHelper.cs" />
     <Compile Include="ExternalHelper\PasswordHash.cs" />
     <Compile Include="Global.asax.cs">
@@ -163,6 +164,7 @@
     </Compile>
     <Compile Include="Models\SessionProfile.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserReset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -288,6 +290,7 @@
     <Content Include="Views\Shared\EditorTemplates\RetypePassword.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\Reset.cshtml" />
+    <Content Include="Views\vApi\v1send.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
