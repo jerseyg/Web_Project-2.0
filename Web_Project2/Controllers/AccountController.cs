@@ -66,15 +66,18 @@ namespace Web_Project2.Controllers
 
 
 
-        public async Task<ActionResult> Reset()
+        public ActionResult Reset()
         {            
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Reset(User user)
+        public ActionResult Reset(User user)
         {
-            //MailGunHelper.SendComplexMessage();
+            MailGunHelper mailGun = new MailGunHelper();
+
+            mailGun.EmailAddress = user.EmailAddress;
+            mailGun.SendResetMessage();
             return View();
         }
 
