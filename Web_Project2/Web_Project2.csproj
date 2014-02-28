@@ -61,6 +61,9 @@
     <Reference Include="PWDTK">
       <HintPath>..\packages\PWDTK.2.0.0.1\lib\net45\PWDTK.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -153,6 +156,7 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParseLogin.cs" />
+    <Compile Include="ExternalHelper\MailGunHelper.cs" />
     <Compile Include="ExternalHelper\PasswordHash.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
