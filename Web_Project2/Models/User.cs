@@ -32,6 +32,15 @@ namespace Web_Project2.Models
 
     public class UserDbContext
     {
+        public async Task<Boolean> CheckUser(string emailAddress)
+        {
+      
+                var foundUser = await (from user in ParseUser.Query
+                                   where user.Get<string>("username") == emailAddress
+                                   select user).FindAsync();
+                return (foundUser.Count() != 0) ? true : false;
+        }
+
         public async Task<Boolean> login(User user)
         {
             string emailAddress = user.EmailAddress;

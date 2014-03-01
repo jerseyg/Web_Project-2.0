@@ -19,6 +19,7 @@ namespace Web_Project2.Controllers
 
     public class AccountController : Controller
     {
+        UserDbContext db = new UserDbContext();
         public const int SALT_BYTE_SIZE = 24;
 
         [ParseLoginCheck]
@@ -42,7 +43,7 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(User user)
         {
-            UserDbContext db = new UserDbContext();
+            
 
                 if (ModelState.IsValid)
                 {
@@ -72,13 +73,24 @@ namespace Web_Project2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Reset(User user)
+        public async Task<ActionResult> Reset(User user)
         {
-            MailGunHelper mailGun = new MailGunHelper();
+            
+            var checkUser = await db.CheckUser(user.EmailAddress);
+            if (checkUser)
+            {
+                MailGunHelper mailGun = new MailGunHelper();
+                mailGun.EmailAddress = user.EmailAddress;
+                mailGun.SendResetMessage();
+                ViewBag.Success = "You have been sent an email!";
+                return View();
+            }
+            else
+            {
+                return View();
+            }
 
-            mailGun.EmailAddress = user.EmailAddress;
-            mailGun.SendResetMessage();
-            return View();
+            
         }
 
 
