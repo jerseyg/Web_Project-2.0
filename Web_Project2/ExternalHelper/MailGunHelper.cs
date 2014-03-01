@@ -1,8 +1,10 @@
-﻿using RestSharp;
+﻿using Parse;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using Web_Project2.Models;
 
@@ -20,6 +22,7 @@ namespace Web_Project2.ExternalHelper
 
 
         public string EmailAddress { get; set; }
+        protected string token { get; set; }
 
         //TO:DO:  Error Handling
 
@@ -46,6 +49,11 @@ namespace Web_Project2.ExternalHelper
             request.AddParameter("to", EmailAddress);
             request.AddParameter("subject", "Reset Password");
             request.AddParameter("html", ResetMessage());
+
+            //upload token to parse
+            SendKey();
+
+
             request.Method = Method.POST;
             return client.Execute(request);
         }
@@ -55,9 +63,12 @@ namespace Web_Project2.ExternalHelper
             var salt = PasswordHash.CreateSalt();
             byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
             var hash = PasswordHash.CreateHash(EmailAddress, byteArraySalt);
+            token = hash.Remove(0,5);
+            
+
 
             //Localhost Testing
-            string builtLink = "http://localhost:8674/vApi/v1send?token=" + hash;
+            string builtLink = "http://localhost:8674/vApi/v1?token=" + token;
 
 
 
@@ -65,9 +76,21 @@ namespace Web_Project2.ExternalHelper
 
         }
 
+        private async Task SendKey()
+        {
+                var tokenKey = token;
+                var email = EmailAddress;
+                ParseObject tokenassociate = new ParseObject("Tokenassociate");
+                tokenassociate["token"] = tokenKey;
+                tokenassociate["user"] = email;
+
+                await tokenassociate.SaveAsync();
+        }
+
         private String ResetMessage()
         {
-            string message = "<html>HTML version of the body</html>" + "<a href='" + GenerateResetLink() + "'>" + GenerateResetLink() + "</a>";
+            var link = GenerateResetLink();
+            string message = "<html>HTML version of the body</html>" + "<a href='" + link + "'>" + link + "</a>";
             return message;
         }
     }
