@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Parse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -18,9 +20,15 @@ namespace Web_Project2.Controllers
             ViewBag.Test1 = user.token;
             return View();
         }
-        public ActionResult SomeActionMethod()
+        public async Task<ActionResult> SomeActionMethod()
         {
-            return Json(new { foo = "bar", baz = "Blech" }, JsonRequestBehavior.AllowGet);
+                IDictionary<string, object> aa = new Dictionary<string, object>
+                {
+                 { "email", "jerseyg@shaw.ca" }
+                };
+               ///var result = await ParseCloud.CallFunctionAsync<IDictionary<string, object>>("averageStars", aa);
+                var result = await ParseCloud.CallFunctionAsync<List<object>>("reset", aa);
+                return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
