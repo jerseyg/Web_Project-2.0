@@ -57,7 +57,10 @@ namespace Web_Project2.ExternalHelper
             request.Method = Method.POST;
             return client.Execute(request);
         }
-
+        /// <summary>
+        /// Creates a link for reseting a password
+        /// </summary>
+        /// <returns></returns>
         private String GenerateResetLink()
         {
             var salt = PasswordHash.CreateSalt();
@@ -65,28 +68,22 @@ namespace Web_Project2.ExternalHelper
             var hash = PasswordHash.CreateHash(EmailAddress, byteArraySalt);
             token = hash.Remove(0,5);
             
-
-
             //Localhost Testing
             string builtLink = "http://localhost:8674/vApi/v1?token=" + token;
 
-
-
             return builtLink;
-
         }
-
         private async Task SendKey()
         {
                 var tokenKey = token;
                 var email = EmailAddress;
+                
                 ParseObject tokenassociate = new ParseObject("Tokenassociate");
                 tokenassociate["token"] = tokenKey;
                 tokenassociate["user"] = email;
 
                 await tokenassociate.SaveAsync();
         }
-
         private String ResetMessage()
         {
             var link = GenerateResetLink();
