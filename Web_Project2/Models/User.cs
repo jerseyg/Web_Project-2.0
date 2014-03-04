@@ -14,6 +14,7 @@ namespace Web_Project2.Models
 {
     public class User
     {
+        public string UserId { get; set; }
         [Required]
         [UIHint("EmailAddress")]
         public string EmailAddress { get; set; }
@@ -39,6 +40,25 @@ namespace Web_Project2.Models
                                    where user.Get<string>("username") == emailAddress
                                    select user).FindAsync();
                 return (foundUser.Count() != 0) ? true : false;
+        }
+
+        public async Task<String> GetUserId(string emailAddress)
+        {
+            try
+            {
+                var foundUser = await (from user in ParseUser.Query
+                                       where user.Get<string>("username") == emailAddress
+                                       select user).FindAsync();
+                var userId = foundUser.First();
+                return userId.ObjectId;
+
+            }
+            catch(ParseException e)
+            {
+                return "";
+            }
+
+
         }
 
         public async Task<Boolean> login(User user)

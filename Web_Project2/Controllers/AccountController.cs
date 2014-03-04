@@ -81,7 +81,7 @@ namespace Web_Project2.Controllers
             {
                 MailGunHelper mailGun = new MailGunHelper();
                 mailGun.EmailAddress = user.EmailAddress;
-                mailGun.SendResetMessage();
+                await mailGun.SendResetMessage();
                 ViewBag.Success = "You have been sent an email!";
                 return View();
             }

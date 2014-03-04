@@ -22,17 +22,20 @@ namespace Web_Project2.ExternalHelper
 
 
         public string EmailAddress { get; set; }
+        protected string UserId { get; set; }
         protected string token { get; set; }
 
-        //TO:DO:  Error Handling
+        UserDbContext db = new UserDbContext();
 
+
+        //TO:DO:  Error Handling
 
         /// <summary>
         /// Handles the Sending of the reset password email.
         /// </summary>
         /// <param name="user">UserReset Model</param>
         /// <returns>client.Execute(request)</returns>
-        public IRestResponse SendResetMessage()
+        public async Task<IRestResponse> SendResetMessage()
         {
 
             
@@ -48,10 +51,10 @@ namespace Web_Project2.ExternalHelper
             request.AddParameter("from", mailGunEmail);
             request.AddParameter("to", EmailAddress);
             request.AddParameter("subject", "Reset Password");
-            request.AddParameter("html", ResetMessage());
+            request.AddParameter("html", await ResetMessage());
 
             //upload token to parse
-            SendKey();
+            await SendKey();
 
 
             request.Method = Method.POST;
@@ -61,15 +64,17 @@ namespace Web_Project2.ExternalHelper
         /// Creates a link for reseting a password
         /// </summary>
         /// <returns></returns>
-        private String GenerateResetLink()
+        private async Task<String> GenerateResetLink()
         {
             var salt = PasswordHash.CreateSalt();
             byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
             var hash = PasswordHash.CreateHash(EmailAddress, byteArraySalt);
+            UserId = await db.GetUserId(EmailAddress);
             token = hash.Remove(0,5);
+
             
             //Localhost Testing
-            string builtLink = "http://localhost:8674/vApi/v1?token=" + token;
+            string builtLink = "http://localhost:8674/vApi/v1?token=" + UserId + ":" + token;
 
             return builtLink;
         }
@@ -84,9 +89,9 @@ namespace Web_Project2.ExternalHelper
 
                 await tokenassociate.SaveAsync();
         }
-        private String ResetMessage()
+        private async Task<String> ResetMessage()
         {
-            var link = GenerateResetLink();
+            var link = await GenerateResetLink();
             string message = "<html>HTML version of the body</html>" + "<a href='" + link + "'>" + link + "</a>";
             return message;
         }
