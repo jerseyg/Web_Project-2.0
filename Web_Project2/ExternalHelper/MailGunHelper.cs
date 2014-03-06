@@ -83,7 +83,7 @@ namespace Web_Project2.ExternalHelper
                 var tokenKey = token;
                 var email = EmailAddress;
                 
-                ParseObject tokenassociate = new ParseObject("Tokenassociate");
+                ParseObject tokenassociate = new ParseObject("tokenassociate");
                 tokenassociate["token"] = tokenKey;
                 tokenassociate["user"] = email;
 

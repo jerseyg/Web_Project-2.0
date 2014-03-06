@@ -155,7 +155,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ParseLogin.cs" />
+    <Compile Include="Controllers\CustomAttributes\ParseLogin.cs" />
     <Compile Include="Controllers\vApiController.cs" />
     <Compile Include="ExternalHelper\MailGunHelper.cs" />
     <Compile Include="ExternalHelper\PasswordHash.cs" />
@@ -287,11 +287,13 @@
     <Content Include="Views\Shared\EditorTemplates\LastName.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RetypePassword.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
-    <Content Include="Views\Account\Reset.cshtml" />
+    <Content Include="Views\App\Reset.cshtml" />
     <Content Include="Views\vApi\v1.cshtml" />
+    <Content Include="Views\App\Reset_Password.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\DatabaseHelper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
