@@ -70,14 +70,16 @@ namespace Web_Project2.Controllers
                                  where tokenassociate.Get<string>("token") == token
                                  select tokenassociate;
                 IEnumerable<ParseObject> results = await tokenQuery.FindAsync();
-
+                
                 if (results.Count() != 0)
                 {
+                    var tokenAssociateUser = results.First().Get<string>("user");
 
                     var userQuery = await (from user in ParseUser.Query
-                                           where user.Get<string>("objectId") == userId
+                                           where user.Get<string>("objectId") == userId &&
+                                                 user.Get<string>("username") == tokenAssociateUser
                                            select user).FindAsync();
-                    if (userQuery.First().ObjectId == userId)
+                    if (userQuery.Count() != 0)
                     {
                         return View();
                     }
