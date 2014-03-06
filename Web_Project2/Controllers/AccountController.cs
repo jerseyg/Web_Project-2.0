@@ -66,34 +66,6 @@ namespace Web_Project2.Controllers
         }
 
 
-
-        public ActionResult Reset()
-        {            
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Reset(User user)
-        {
-            
-            var checkUser = await db.CheckUser(user.EmailAddress);
-            if (checkUser)
-            {
-                MailGunHelper mailGun = new MailGunHelper();
-                mailGun.EmailAddress = user.EmailAddress;
-                await mailGun.SendResetMessage();
-                ViewBag.Success = "You have been sent an email!";
-                return View();
-            }
-            else
-            {
-                return View();
-            }
-
-            
-        }
-
-
         public ActionResult Edit(Guid id)
         {
             //User user = db.Users.Find(id);
