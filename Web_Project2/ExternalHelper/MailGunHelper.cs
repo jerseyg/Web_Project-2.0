@@ -70,11 +70,10 @@ namespace Web_Project2.ExternalHelper
             byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
             var hash = PasswordHash.CreateHash(EmailAddress, byteArraySalt);
             UserId = await db.GetUserId(EmailAddress);
-            token = hash.Remove(0,5);
-
+            token = RemoveSpecialCharacters(hash.Remove(0, 5));
             
             //Localhost Testing
-            string builtLink = "http://localhost:8674/vApi/v1?token=" + UserId + ":" + token;
+            string builtLink = "http://localhost:8674/App/Reset_Password?token=" + UserId + ":" + token;
 
             return builtLink;
         }
@@ -94,6 +93,19 @@ namespace Web_Project2.ExternalHelper
             var link = await GenerateResetLink();
             string message = "<html>HTML version of the body</html>" + "<a href='" + link + "'>" + link + "</a>";
             return message;
+        }
+
+        private static string RemoveSpecialCharacters(string str) 
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in str) 
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_') 
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
         }
     }
 }
