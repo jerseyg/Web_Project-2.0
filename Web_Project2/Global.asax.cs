@@ -15,6 +15,10 @@ namespace Web_Project2
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        //Change Id and key when needed
+        protected const string PARSEAPPID = "MXtZWjQd43oVRapHHfQ213Kls6EavtWpNrKez1lr";
+        protected const string PARSEDOTNETKEY = "Ew5iZztAoPxCh9PATc3PDmexEuBmIdY6BHYn5YTj";
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -25,7 +29,7 @@ namespace Web_Project2
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //Initialize Parse.com 
-            ParseClient.Initialize("MXtZWjQd43oVRapHHfQ213Kls6EavtWpNrKez1lr", "Ew5iZztAoPxCh9PATc3PDmexEuBmIdY6BHYn5YTj");
+            ParseClient.Initialize(PARSEAPPID, PARSEDOTNETKEY);
         }
     }
 }

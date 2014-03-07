@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Web_Project2.Controllers.DatabaseHelper;
 using Web_Project2.Models;
 
 namespace Web_Project2.ExternalHelper
@@ -25,7 +26,7 @@ namespace Web_Project2.ExternalHelper
         protected string UserId { get; set; }
         protected string token { get; set; }
 
-        UserDbContext db = new UserDbContext();
+        ParseDb db = new ParseDb();
 
 
         //TO:DO:  Error Handling
@@ -69,7 +70,8 @@ namespace Web_Project2.ExternalHelper
             var salt = PasswordHash.CreateSalt();
             byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
             var hash = PasswordHash.CreateHash(EmailAddress, byteArraySalt);
-            UserId = await db.GetUserId(EmailAddress);
+            var ParseUser = await db.GetSingleUserObject(EmailAddress);
+            UserId = ParseUser.ObjectId;
             token = RemoveSpecialCharacters(hash.Remove(0, 5));
             
             //Localhost Testing

@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Parse;
 using System.Diagnostics;
+using Web_Project2.Controllers.DatabaseHelper;
 
 
 namespace Web_Project2.Controllers
@@ -19,7 +20,7 @@ namespace Web_Project2.Controllers
 
     public class AccountController : Controller
     {
-        UserDbContext db = new UserDbContext();
+        ParseDb db = new ParseDb();
         public const int SALT_BYTE_SIZE = 24;
 
         [ParseLoginCheck]
@@ -50,8 +51,8 @@ namespace Web_Project2.Controllers
                     bool create = await db.CreateUser(user);
                     if (create != false)
                     {
-                        await db.login(user);
-                        var UserProfile = await db.CreateSessionProfile(user.EmailAddress);
+                        await db.Login(user._EmailAddress, user._Password);
+                        var UserProfile = await db.CreateSession(user._EmailAddress);
                         Session["UserProfile"] = UserProfile;
 
                         return RedirectToAction("index", "App");

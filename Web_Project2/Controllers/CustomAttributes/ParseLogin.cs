@@ -16,19 +16,8 @@ namespace Web_Project2.Controllers
         /// <param name="filterContext"></param>
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-           
-            if (ParseUser.CurrentUser != null)
-            {
-                //ViewResult result = new ViewResult();
-                //result.ViewName = "index";
-                //filterContext.Result = result;
-            }
-            else
-            {
-                ViewResult result = new ViewResult();
-                result.ViewName = "Login";
-                filterContext.Result = new RedirectResult("/App/Login");
-            }
+            if (ParseUser.CurrentUser != null){}
+            else{filterContext.Result = new RedirectResult("/App/Login");}
         }
     }
 }

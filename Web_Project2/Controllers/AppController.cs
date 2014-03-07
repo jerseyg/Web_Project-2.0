@@ -17,8 +17,7 @@ namespace Web_Project2.Controllers
     public class AppController : Controller
     {
 
-        UserDbContext dbContext = new UserDbContext();
-        
+        ParseDb db = new ParseDb();
         //
         // GET: /App/
         [ParseLoginCheck]
@@ -36,16 +35,15 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(User user)
         {
-            UserDbContext db = new UserDbContext();
 
             if (ModelState.IsValid)
             {
-                bool login = await db.login(user);
+                bool login = await db.Login(user._EmailAddress, user._Password);
 
                 if (login != false)
                 {
                     //Creates a Session key called "UserProfile"
-                    var UserProfile = await db.CreateSessionProfile(user.EmailAddress);
+                    var UserProfile = await db.CreateSession(user._EmailAddress);
                     Session["UserProfile"] = UserProfile;
                     return RedirectToAction("index");
                 }
@@ -171,11 +169,11 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Reset(User user)
         {
-            var checkUser = await dbContext.CheckUser(user.EmailAddress);
+            var checkUser = await db.UserExists(user._EmailAddress);
             if (checkUser)
             {
                 MailGunHelper mailGun = new MailGunHelper();
-                mailGun.EmailAddress = user.EmailAddress;
+                mailGun.EmailAddress = user._EmailAddress;
                 await mailGun.SendResetMessage();
                 ViewBag.Success = "You have been sent an email!";
                 return View();
