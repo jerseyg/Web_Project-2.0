@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Web_Project2.Controllers.DatabaseHelper;
 using Web_Project2.ExternalHelper;
 using Web_Project2.Models;
 
@@ -16,7 +17,8 @@ namespace Web_Project2.Controllers
     public class AppController : Controller
     {
 
-        UserDbContext db = new UserDbContext();
+        UserDbContext dbContext = new UserDbContext();
+        
         //
         // GET: /App/
         [ParseLoginCheck]
@@ -64,13 +66,69 @@ namespace Web_Project2.Controllers
             string userId = userModel.token.Substring(0, 10);
             string token = userModel.token.Remove(0, 11);
 
+            var tokenDataSession = new UserTokenModel()
+            {
+                   _UserId = userId,
+                   _Token = token
+            };
+            Session["tokenDataSession"] = tokenDataSession;
+
+            bool IsTokenAuthenticated = await CheckToken(userId, token);
+            if (IsTokenAuthenticated) { return View(); }
+            else { return View(); }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Reset_Password(UserReset2 userModel)
+        {
+            ParseDb db = new ParseDb();
+            UserTokenModel tokenSession = (UserTokenModel) HttpContext.Session["tokenDataSession"];
+
+            string userId = tokenSession._UserId;
+            string token = tokenSession._Token;
+
+            if (userModel.Password != "" || userModel.RetypePassword != "")
+            {
+                if (userModel.Password == userModel.RetypePassword)
+                {
+                    bool IsTokenAuthenticated = await CheckToken(userId, token);
+                    if (IsTokenAuthenticated) 
+                    {
+
+                        IDictionary<string, object> cloudDictionary = new Dictionary<string, object>
+                                        {
+                                            {"userId", userId},
+                                            {"password", db.HashPassword(userModel.Password)},
+                                            {"salt", db._Salt}
+                                        };
+                        var result = await ParseCloud.CallFunctionAsync<String>("tokenAuth", cloudDictionary);
+                        return RedirectToAction("Login"); 
+                    }
+                    else { return View(); }
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
+
+
+        }
+
+        public async Task<Boolean> CheckToken(string userId, string token)
+        {
             try
             {
                 var tokenQuery = from tokenassociate in ParseObject.GetQuery("tokenassociate")
                                  where tokenassociate.Get<string>("token") == token
                                  select tokenassociate;
                 IEnumerable<ParseObject> results = await tokenQuery.FindAsync();
-                
+
                 if (results.Count() != 0)
                 {
                     var tokenAssociateUser = results.First().Get<string>("user");
@@ -79,41 +137,31 @@ namespace Web_Project2.Controllers
                                            where user.Get<string>("objectId") == userId &&
                                                  user.Get<string>("username") == tokenAssociateUser
                                            select user).FindAsync();
-                    if (userQuery.Count() != 0)
-                    {
-                        return View();
-                    }
+                    if (userQuery.Count() != 0){ return true; }
                     else
-                    {
-                        //Userid sent with token does not match database
-                        return View();
+                    {//Userid sent with token does not match database 
+                        return false;
                     }
 
                 }
                 else
                 {
                     //TODO: token does not exist.
-                    return View();
+                    return false;
                 }
             }
             catch (ParseException e)
             {
                 //ParseError
-                return View();
+                return false;
             }
             catch (Exception e)
             {
                 //All other exceptions
-                return View();
+                return false;
             }
-        }
+        } 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Reset_Password()
-        {
-            return View();
-        }
 
         public ActionResult Reset()
         {
@@ -124,7 +172,7 @@ namespace Web_Project2.Controllers
         public async Task<ActionResult> Reset(User user)
         {
  
-            var checkUser = await db.CheckUser(user.EmailAddress);
+            var checkUser = await dbContext.CheckUser(user.EmailAddress);
             if (checkUser)
             {
                 MailGunHelper mailGun = new MailGunHelper();
