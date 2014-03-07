@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Web_Project2.Models
 {
-    public class UserReset
+    public class UserReset2
     {
         public string emailAddress { get; set; }
         public string token { get; set; }
