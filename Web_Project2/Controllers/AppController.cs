@@ -171,7 +171,9 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Reset(User user)
         {
- 
+            //return view early: to disable reset button
+            return RedirectToAction("Login");
+
             var checkUser = await dbContext.CheckUser(user.EmailAddress);
             if (checkUser)
             {
