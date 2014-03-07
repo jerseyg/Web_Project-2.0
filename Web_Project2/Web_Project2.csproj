@@ -154,6 +154,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\DatabaseHelper\ParseDb.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CustomAttributes\ParseLogin.cs" />
     <Compile Include="Controllers\vApiController.cs" />
@@ -164,7 +165,9 @@
     </Compile>
     <Compile Include="Models\SessionProfile.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserReset2.cs" />
     <Compile Include="Models\UserReset.cs" />
+    <Compile Include="Models\UserTokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -293,7 +296,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\DatabaseHelper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
