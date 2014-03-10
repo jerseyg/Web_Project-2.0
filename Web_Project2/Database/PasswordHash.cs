@@ -5,7 +5,7 @@ using System.Web;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace Web_Project2.ExternalHelper
+namespace Web_Project2.Database
 {
     public class PasswordHash
     {

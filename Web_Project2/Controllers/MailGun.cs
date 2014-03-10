@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Web_Project2.Controllers.DatabaseHelper;
+using Web_Project2.Database;
+using Web_Project2.Controllers;
 using Web_Project2.Models;
 
-namespace Web_Project2.ExternalHelper
+namespace Web_Project2.Controllers
 {
-    public class MailGunHelper
+    public class MailGun
     {
 
         //Change key if needed
@@ -20,7 +21,8 @@ namespace Web_Project2.ExternalHelper
         protected const string mailGunEmail = "Captivate ResetPassword <postmaster@sandbox2255.mailgun.org>";
         //Change domain if needed
         protected const string mailGunDomain = "sandbox2255.mailgun.org";
-
+        //Change subject if needed
+        protected const string mailGunSubject = "Reset Password";
 
         public string EmailAddress { get; set; }
         protected string UserId { get; set; }
@@ -38,7 +40,7 @@ namespace Web_Project2.ExternalHelper
         /// <returns>client.Execute(request)</returns>
         public async Task<IRestResponse> SendResetMessage()
         {
-
+            string subjectParam = "Reset Password";
             
             RestClient client = new RestClient();
             client.BaseUrl = "https://api.mailgun.net/v2";
@@ -51,7 +53,7 @@ namespace Web_Project2.ExternalHelper
             request.Resource = "{domain}/messages";
             request.AddParameter("from", mailGunEmail);
             request.AddParameter("to", EmailAddress);
-            request.AddParameter("subject", "Reset Password");
+            request.AddParameter("subject", subjectParam);
             request.AddParameter("html", await ResetMessage());
 
             //upload token to parse
@@ -84,16 +86,16 @@ namespace Web_Project2.ExternalHelper
                 var tokenKey = token;
                 var email = EmailAddress;
                 
-                ParseObject tokenassociate = new ParseObject("tokenassociate");
-                tokenassociate["token"] = tokenKey;
-                tokenassociate["user"] = email;
+                ParseTokenModel tokenAssociate = new ParseTokenModel();
+                tokenAssociate.Token = tokenKey;
+                tokenAssociate.User = email;
 
-                await tokenassociate.SaveAsync();
+                await tokenAssociate.SaveAsync();
         }
         private async Task<String> ResetMessage()
         {
             var link = await GenerateResetLink();
-            string message = "<html>HTML version of the body</html>" + "<a href='" + link + "'>" + link + "</a>";
+            string message = "<html>HTML version of the body" + "<a href='" + link + "'>" + link + "</a>" + "</html>";
             return message;
         }
 

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Web_Project2.ExternalHelper;
+using Web_Project2.Controllers;
 using Web_Project2.Models;
 
-namespace Web_Project2.Controllers.DatabaseHelper
+namespace Web_Project2.Database
 {
     public class ParseDb
     {
@@ -50,7 +50,7 @@ namespace Web_Project2.Controllers.DatabaseHelper
             }
             catch (ParseException)
             {
-                return false;
+                throw;
             }
 
         }
@@ -73,7 +73,7 @@ namespace Web_Project2.Controllers.DatabaseHelper
             }
             catch (Exception e)
             {
-                return false;
+                throw e;
             }
         }
 

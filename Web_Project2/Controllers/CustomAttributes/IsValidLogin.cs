@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Web_Project2.Controllers
 {
-    class ParseLoginCheckAttribute : ActionFilterAttribute, IActionFilter
+    class IsValidLoginAttribute : ActionFilterAttribute, IActionFilter
     {
         /// <summary>
         /// Attribute Executed before an action call to check if user is logged in.
