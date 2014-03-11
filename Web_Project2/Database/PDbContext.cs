@@ -10,7 +10,7 @@ using Web_Project2.Models;
 
 namespace Web_Project2.Database
 {
-    public class ParseDb
+    public class PDbContext
     {
 
         public string _Salt { get; set; }
@@ -84,10 +84,10 @@ namespace Web_Project2.Database
                 var ParseUser = await GetSingleUserObject(emailAddress);
                 var profileData = new SessionProfile()
                 {
-                    parseID = ParseUser.ObjectId,
-                    EmailAddress = ParseUser.Get<string>("username"),
-                    firstName = ParseUser.Get<string>("firstName"),
-                    lastName = ParseUser.Get<string>("lastName")
+                    _ParseID = ParseUser.ObjectId,
+                    _EmailAddress = ParseUser.Get<string>("username"),
+                    _FirstName = ParseUser.Get<string>("firstName"),
+                    _LastName = ParseUser.Get<string>("lastName")
                 };
                 return profileData;
             }
