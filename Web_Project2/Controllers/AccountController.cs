@@ -7,12 +7,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Security.Cryptography;
 using Web_Project2.Models;
-using Web_Project2.ExternalHelper;
+using Web_Project2.Controllers;
 using System.Text;
 using System.Threading.Tasks;
 using Parse;
 using System.Diagnostics;
-using Web_Project2.Controllers.DatabaseHelper;
+using Web_Project2.Database;
 
 
 namespace Web_Project2.Controllers
@@ -23,7 +23,7 @@ namespace Web_Project2.Controllers
         ParseDb db = new ParseDb();
         public const int SALT_BYTE_SIZE = 24;
 
-        [ParseLoginCheck]
+        [IsValidLogin]
         public ActionResult Details()
         {
             return View();
@@ -65,60 +65,6 @@ namespace Web_Project2.Controllers
                 return View();
   
         }
-
-
-        public ActionResult Edit(Guid id)
-        {
-            //User user = db.Users.Find(id);
-           // if (user == null)
-           // {
-           //     return HttpNotFound();
-           // }
-            return View();
-        }
-
-        //
-        // POST: /Account/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(User user)
-        {
-            if (ModelState.IsValid)
-            {
-               // db.Entry(user).State = EntityState.Modified;
-               // db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-
-        //
-        // GET: /Account/Delete/5
-
-        public ActionResult Delete(Guid id)
-        {
-            //User user = db.Users.Find(id);
-         //   if (user == null)
-           // {
-           //     return HttpNotFound();
-           // }
-            return View();
-        }
-
-        //
-        // POST: /Account/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
-        {
-           // User user = db.Users.Find(id);
-            //db.Users.Remove(user);
-            //db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
 
     }
 }

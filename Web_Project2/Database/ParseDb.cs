@@ -96,6 +96,53 @@ namespace Web_Project2.Database
                 return e;
             }
         }
+
+        public async Task<Boolean> IsTokenValid(string userId, string token)
+        {
+            try
+            {
+                var tokenQuery = from tokenassociate in ParseObject.GetQuery("tokenassociate")
+                                 where tokenassociate.Get<string>("token") == token
+                                 select tokenassociate;
+                IEnumerable<ParseObject> results = await tokenQuery.FindAsync();
+
+                if (results.Count() != 0)
+                {
+                    var tokenAssociateUser = results.First().Get<string>("user");
+
+                    var userQuery = await (from user in ParseUser.Query
+                                           where user.Get<string>("objectId") == userId &&
+                                                 user.Get<string>("username") == tokenAssociateUser
+                                           select user).FindAsync();
+
+                    if (userQuery.Count() != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {//Userid sent with token does not match database 
+                        return false;
+                    }
+
+                }
+                else
+                {
+                    //TODO: token does not exist.
+                    return false;
+                }
+            }
+            catch (ParseException e)
+            {
+                //ParseError
+                return false;
+            }
+            catch (Exception e)
+            {
+                //All other exceptions
+                return false;
+            }
+        } 
+
         public string HashPassword(string password)
         {
             var salt = PasswordHash.CreateSalt();

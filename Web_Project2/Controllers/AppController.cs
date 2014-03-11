@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Web_Project2.Controllers.DatabaseHelper;
-using Web_Project2.ExternalHelper;
+using Web_Project2.Database;
+using Web_Project2.Controllers;
 using Web_Project2.Models;
 
 namespace Web_Project2.Controllers
@@ -20,7 +20,7 @@ namespace Web_Project2.Controllers
         ParseDb db = new ParseDb();
         //
         // GET: /App/
-        [ParseLoginCheck]
+        [IsValidLogin]
         public ActionResult Index()
         {
             return View();        
@@ -71,7 +71,7 @@ namespace Web_Project2.Controllers
             };
             Session["tokenDataSession"] = tokenDataSession;
 
-            bool IsTokenAuthenticated = await CheckToken(userId, token);
+            bool IsTokenAuthenticated = await db.IsTokenValid(userId, token);
             if (IsTokenAuthenticated) { return View(); }
             else { return View(); }
         }
@@ -80,7 +80,7 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Reset_Password(UserReset2 userModel)
         {
-            ParseDb db = new ParseDb();
+            
             UserTokenModel tokenSession = (UserTokenModel) HttpContext.Session["tokenDataSession"];
 
             string userId = tokenSession._UserId;
@@ -90,7 +90,7 @@ namespace Web_Project2.Controllers
             {
                 if (userModel.Password == userModel.RetypePassword)
                 {
-                    bool IsTokenAuthenticated = await CheckToken(userId, token);
+                    bool IsTokenAuthenticated = await db.IsTokenValid(userId, token);
                     if (IsTokenAuthenticated) 
                     {
 
@@ -101,6 +101,7 @@ namespace Web_Project2.Controllers
                                             {"salt", db._Salt}
                                         };
                         var result = await ParseCloud.CallFunctionAsync<String>("tokenAuth", cloudDictionary);
+                        Session.Abandon();
                         return RedirectToAction("Login"); 
                     }
                     else { return View(); }
@@ -118,47 +119,7 @@ namespace Web_Project2.Controllers
 
         }
 
-        public async Task<Boolean> CheckToken(string userId, string token)
-        {
-            try
-            {
-                var tokenQuery = from tokenassociate in ParseObject.GetQuery("tokenassociate")
-                                 where tokenassociate.Get<string>("token") == token
-                                 select tokenassociate;
-                IEnumerable<ParseObject> results = await tokenQuery.FindAsync();
-
-                if (results.Count() != 0)
-                {
-                    var tokenAssociateUser = results.First().Get<string>("user");
-
-                    var userQuery = await (from user in ParseUser.Query
-                                           where user.Get<string>("objectId") == userId &&
-                                                 user.Get<string>("username") == tokenAssociateUser
-                                           select user).FindAsync();
-                    if (userQuery.Count() != 0){ return true; }
-                    else
-                    {//Userid sent with token does not match database 
-                        return false;
-                    }
-
-                }
-                else
-                {
-                    //TODO: token does not exist.
-                    return false;
-                }
-            }
-            catch (ParseException e)
-            {
-                //ParseError
-                return false;
-            }
-            catch (Exception e)
-            {
-                //All other exceptions
-                return false;
-            }
-        } 
+       
 
 
         public ActionResult Reset()
@@ -172,7 +133,7 @@ namespace Web_Project2.Controllers
             var checkUser = await db.UserExists(user._EmailAddress);
             if (checkUser)
             {
-                MailGunHelper mailGun = new MailGunHelper();
+                MailGun mailGun = new MailGun();
                 mailGun.EmailAddress = user._EmailAddress;
                 await mailGun.SendResetMessage();
                 ViewBag.Success = "You have been sent an email!";
