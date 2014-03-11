@@ -16,17 +16,17 @@ namespace Web_Project2.Controllers
     {
 
         //Change key if needed
-        protected const string mailGunApiKey = "key-2aelsu6k8tyk3gku66hh9l-4cwb9i0o5";
+        private const string mailGunApiKey = "key-2aelsu6k8tyk3gku66hh9l-4cwb9i0o5";
         //This is the email the receiver will see
-        protected const string mailGunEmail = "Captivate ResetPassword <postmaster@sandbox2255.mailgun.org>";
+        private const string mailGunEmail = "Captivate ResetPassword <postmaster@sandbox2255.mailgun.org>";
         //Change domain if needed
-        protected const string mailGunDomain = "sandbox2255.mailgun.org";
+        private const string mailGunDomain = "sandbox2255.mailgun.org";
         //Change subject if needed
-        protected const string mailGunSubject = "Reset Password";
+        private const string mailGunSubject = "Reset Password";
 
         public string EmailAddress { get; set; }
-        protected string UserId { get; set; }
-        protected string token { get; set; }
+        private string UserId { get; set; }
+        private string token { get; set; }
 
         ParseDb db = new ParseDb();
 
