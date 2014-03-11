@@ -19,7 +19,7 @@ namespace Web_Project2.Database
         {
 
             var foundUser = await (from user in ParseUser.Query
-                                   where user.Get<string>("username") == emailAddress
+                                   where user.Username == emailAddress
                                    select user).FindAsync();
             return (foundUser.Count() != 0) ? true : false;
         }
@@ -27,7 +27,7 @@ namespace Web_Project2.Database
         public async Task<ParseObject> GetSingleUserObject(string emailAddress)
         {
             var foundUser = await (from user in ParseUser.Query
-                                   where user.Get<string>("username") == emailAddress
+                                   where user.Username == emailAddress
                                    select user).FindAsync();
             var userObject = foundUser.First();
             return userObject;
@@ -101,14 +101,15 @@ namespace Web_Project2.Database
         {
             try
             {
-                var tokenQuery = from tokenassociate in ParseObject.GetQuery("tokenassociate")
-                                 where tokenassociate.Get<string>("token") == token
+                var tokenQuery = from tokenassociate in new ParseQuery<ParseTokenModel>()
+                                 where tokenassociate.Token == token
                                  select tokenassociate;
                 IEnumerable<ParseObject> results = await tokenQuery.FindAsync();
+                var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(results.First().ObjectId);
 
                 if (results.Count() != 0)
                 {
-                    var tokenAssociateUser = results.First().Get<string>("user");
+                    var tokenAssociateUser = tokenAssociateReference.Token;
 
                     var userQuery = await (from user in ParseUser.Query
                                            where user.Get<string>("objectId") == userId &&

@@ -28,7 +28,7 @@ namespace Web_Project2.Controllers
         private string UserId { get; set; }
         private string token { get; set; }
 
-        ParseDb db = new ParseDb();
+        PDbContext db = new PDbContext();
 
 
         //TO:DO:  Error Handling

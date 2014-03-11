@@ -8,12 +8,13 @@ namespace Web_Project2.Models
 {
     public class UserReset
     {
-        public string emailAddress { get; set; }
-        public string token { get; set; }
+        public string _EmailAddress { get; set; }
+        public string _Token { get; set; }
 
         [UIHint("Password")]
-        public string Password { get; set; }
+        public string _Password { get; set; }
         [UIHint("RetypePassword")]
-        public string RetypePassword { get; set; }
+        public string _RetypePassword { get; set; }
     }
 }
+

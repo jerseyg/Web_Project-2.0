@@ -154,17 +154,18 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppController.cs" />
-    <Compile Include="Controllers\DatabaseHelper\ParseDb.cs" />
+    <Compile Include="Controllers\ErrorHandler.cs" />
+    <Compile Include="Database\PDbContext.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\CustomAttributes\ParseLogin.cs" />
-    <Compile Include="ExternalHelper\MailGunHelper.cs" />
-    <Compile Include="ExternalHelper\PasswordHash.cs" />
+    <Compile Include="Controllers\CustomAttributes\IsValidLogin.cs" />
+    <Compile Include="Controllers\MailGun.cs" />
+    <Compile Include="Database\PasswordHash.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ParseTokenModel.cs" />
     <Compile Include="Models\SessionProfile.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserReset2.cs" />
     <Compile Include="Models\UserReset.cs" />
     <Compile Include="Models\UserTokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

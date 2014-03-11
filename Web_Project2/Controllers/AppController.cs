@@ -17,7 +17,7 @@ namespace Web_Project2.Controllers
     public class AppController : Controller
     {
 
-        ParseDb db = new ParseDb();
+        PDbContext db = new PDbContext();
         //
         // GET: /App/
         [IsValidLogin]
@@ -33,17 +33,17 @@ namespace Web_Project2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(User user)
+        public async Task<ActionResult> Login(User userModel)
         {
 
             if (ModelState.IsValid)
             {
-                bool login = await db.Login(user._EmailAddress, user._Password);
+                bool login = await db.Login(userModel._EmailAddress, userModel._Password);
 
                 if (login != false)
                 {
                     //Creates a Session key called "UserProfile"
-                    var UserProfile = await db.CreateSession(user._EmailAddress);
+                    var UserProfile = await db.CreateSession(userModel._EmailAddress);
                     Session["UserProfile"] = UserProfile;
                     return RedirectToAction("index");
                 }
@@ -59,10 +59,10 @@ namespace Web_Project2.Controllers
                                        
         }
 
-        public async Task<ActionResult> Reset_Password(UserReset userModel)
+        public async Task<ActionResult> Reset_Password(UserTokenModel userTokenModel)
         {
-            string userId = userModel.token.Substring(0, 10);
-            string token = userModel.token.Remove(0, 11);
+            string userId = userTokenModel._Token.Substring(0, 10);
+            string token = userTokenModel._Token.Remove(0, 11);
 
             var tokenDataSession = new UserTokenModel()
             {
@@ -71,14 +71,14 @@ namespace Web_Project2.Controllers
             };
             Session["tokenDataSession"] = tokenDataSession;
 
-            bool IsTokenAuthenticated = await db.IsTokenValid(userId, token);
-            if (IsTokenAuthenticated) { return View(); }
+            bool IsTokenValid = await db.IsTokenValid(userId, token);
+            if (IsTokenValid) { return View(); }
             else { return View(); }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Reset_Password(UserReset2 userModel)
+        public async Task<ActionResult> Reset_Password(UserReset userResetModel)
         {
             
             UserTokenModel tokenSession = (UserTokenModel) HttpContext.Session["tokenDataSession"];
@@ -86,25 +86,27 @@ namespace Web_Project2.Controllers
             string userId = tokenSession._UserId;
             string token = tokenSession._Token;
 
-            if (userModel.Password != "" || userModel.RetypePassword != "")
+            if (userResetModel._Password != "" || userResetModel._RetypePassword != "")
             {
-                if (userModel.Password == userModel.RetypePassword)
+                if (userResetModel._Password == userResetModel._RetypePassword)
                 {
                     bool IsTokenAuthenticated = await db.IsTokenValid(userId, token);
                     if (IsTokenAuthenticated) 
                     {
-
                         IDictionary<string, object> cloudDictionary = new Dictionary<string, object>
-                                        {
-                                            {"userId", userId},
-                                            {"password", db.HashPassword(userModel.Password)},
-                                            {"salt", db._Salt}
-                                        };
+                        {
+                            {"userId", userId},
+                            {"password", db.HashPassword(userResetModel._Password)},
+                            {"salt", db._Salt}
+                        };
                         var result = await ParseCloud.CallFunctionAsync<String>("tokenAuth", cloudDictionary);
                         Session.Abandon();
                         return RedirectToAction("Login"); 
                     }
-                    else { return View(); }
+                    else 
+                    { 
+                        return View(); 
+                    }
                 }
                 else
                 {
@@ -115,12 +117,7 @@ namespace Web_Project2.Controllers
             {
                 return View();
             }
-
-
-        }
-
-       
-
+       }
 
         public ActionResult Reset()
         {
@@ -128,13 +125,13 @@ namespace Web_Project2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Reset(User user)
+        public async Task<ActionResult> Reset(User userModel)
         {
-            var checkUser = await db.UserExists(user._EmailAddress);
-            if (checkUser)
+            var userExists = await db.UserExists(userModel._EmailAddress);
+            if (userExists)
             {
                 MailGun mailGun = new MailGun();
-                mailGun.EmailAddress = user._EmailAddress;
+                mailGun.EmailAddress = userModel._EmailAddress;
                 await mailGun.SendResetMessage();
                 ViewBag.Success = "You have been sent an email!";
                 return View();
@@ -152,7 +149,5 @@ namespace Web_Project2.Controllers
             ParseUser.LogOut();
             return RedirectToAction("Index", "Home");
         }
-
     }
-
 }

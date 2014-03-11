@@ -9,9 +9,9 @@ namespace Web_Project2.Models
     [Serializable]
     public class SessionProfile
     {
-        public string parseID { get; set; }
-        public string EmailAddress { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
+        public string _ParseID { get; set; }
+        public string _EmailAddress { get; set; }
+        public string _FirstName { get; set; }
+        public string _LastName { get; set; }
     }
 }

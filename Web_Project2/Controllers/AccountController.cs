@@ -20,7 +20,7 @@ namespace Web_Project2.Controllers
 
     public class AccountController : Controller
     {
-        ParseDb db = new ParseDb();
+        Web_Project2.Database.PDbContext db = new Web_Project2.Database.PDbContext();
         public const int SALT_BYTE_SIZE = 24;
 
         [IsValidLogin]
@@ -42,17 +42,17 @@ namespace Web_Project2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(User user)
+        public async Task<ActionResult> Create(User userModel)
         {
             
 
                 if (ModelState.IsValid)
                 {
-                    bool create = await db.CreateUser(user);
+                    bool create = await db.CreateUser(userModel);
                     if (create != false)
                     {
-                        await db.Login(user._EmailAddress, user._Password);
-                        var UserProfile = await db.CreateSession(user._EmailAddress);
+                        await db.Login(userModel._EmailAddress, userModel._Password);
+                        var UserProfile = await db.CreateSession(userModel._EmailAddress);
                         Session["UserProfile"] = UserProfile;
 
                         return RedirectToAction("index", "App");
