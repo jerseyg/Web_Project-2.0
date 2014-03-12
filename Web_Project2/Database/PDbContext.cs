@@ -24,7 +24,7 @@ namespace Web_Project2.Database
             return (foundUser.Count() != 0) ? true : false;
         }
 
-        public async Task<ParseObject> GetSingleUserObject(string emailAddress)
+        public async Task<ParseObject> ReturnSingleUserObject(string emailAddress)
         {
             var foundUser = await (from user in ParseUser.Query
                                    where user.Username == emailAddress
@@ -33,6 +33,15 @@ namespace Web_Project2.Database
             return userObject;
         }
 
+        public async Task<IEnumerable<ParseObject>> ReturnAllRowsParseObject(string parseClass)
+        {
+            var query = from genericClass in ParseObject.GetQuery(parseClass)
+                        where true
+                        select genericClass;
+            IEnumerable<ParseObject> results = await query.FindAsync();
+
+            return results;
+        }
         public async Task<Boolean> Login(string emailAddress, string password)
         {
             string email = emailAddress;
@@ -40,7 +49,7 @@ namespace Web_Project2.Database
 
             try
             {
-                var user = await GetSingleUserObject(email);
+                var user = await ReturnSingleUserObject(email);
                 var salt = user.Get<string>("salt");
                 var hashedPassword = HashPassword(email, salt);
 
@@ -81,7 +90,7 @@ namespace Web_Project2.Database
         {
             try
             {
-                var ParseUser = await GetSingleUserObject(emailAddress);
+                var ParseUser = await ReturnSingleUserObject(emailAddress);
                 var profileData = new SessionProfile()
                 {
                     _ParseID = ParseUser.ObjectId,
@@ -101,19 +110,18 @@ namespace Web_Project2.Database
         {
             try
             {
-                var tokenQuery = from tokenassociate in new ParseQuery<ParseTokenModel>()
+                var tokenQuery = await (from tokenassociate in new ParseQuery<ParseTokenModel>()
                                  where tokenassociate.Token == token
-                                 select tokenassociate;
-                IEnumerable<ParseObject> results = await tokenQuery.FindAsync();
-                var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(results.First().ObjectId);
+                                 select tokenassociate).FindAsync();
+                var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(tokenQuery.First().ObjectId);
 
-                if (results.Count() != 0)
+                if (tokenQuery.Count() != 0)
                 {
                     var tokenAssociateUser = tokenAssociateReference.Token;
 
                     var userQuery = await (from user in ParseUser.Query
-                                           where user.Get<string>("objectId") == userId &&
-                                                 user.Get<string>("username") == tokenAssociateUser
+                                           where user.ObjectId == userId &&
+                                                 user.Username == tokenAssociateUser
                                            select user).FindAsync();
 
                     if (userQuery.Count() != 0)
