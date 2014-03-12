@@ -72,7 +72,7 @@ namespace Web_Project2.Controllers
             var salt = PasswordHash.CreateSalt();
             byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
             var hash = PasswordHash.CreateHash(EmailAddress, byteArraySalt);
-            var ParseUser = await db.GetSingleUserObject(EmailAddress);
+            var ParseUser = await db.ReturnSingleUserObject(EmailAddress);
             UserId = ParseUser.ObjectId;
             token = RemoveSpecialCharacters(hash.Remove(0, 5));
             
