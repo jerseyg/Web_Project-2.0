@@ -18,8 +18,8 @@ namespace Web_Project2
     public class MvcApplication : System.Web.HttpApplication
     {
         //Change Id and key when needed
-        private const string PARSEAPPID = "MXtZWjQd43oVRapHHfQ213Kls6EavtWpNrKez1lr";
-        private const string PARSEDOTNETKEY = "Ew5iZztAoPxCh9PATc3PDmexEuBmIdY6BHYn5YTj";
+        private readonly string PARSEAPPID = "MXtZWjQd43oVRapHHfQ213Kls6EavtWpNrKez1lr";
+        private readonly string PARSEDOTNETKEY = "Ew5iZztAoPxCh9PATc3PDmexEuBmIdY6BHYn5YTj";
 
         protected void Application_Start()
         {
