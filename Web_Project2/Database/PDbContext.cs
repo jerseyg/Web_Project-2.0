@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Providers.Entities;
 using Web_Project2.Controllers;
 using Web_Project2.Models;
 
 namespace Web_Project2.Database
 {
-    public class PDbContext
+    public class PDbContext : ErrorHandler
     {
 
         public string _Salt { get; set; }
@@ -48,9 +49,10 @@ namespace Web_Project2.Database
 
                 return true;
             }
-            catch (ParseException)
+            catch (ParseException e)
             {
-                throw;
+                TrackError(e);
+                return false;
             }
 
         }
@@ -71,9 +73,10 @@ namespace Web_Project2.Database
                 await newUser.SignUpAsync();
                 return true;
             }
-            catch (Exception e)
+            catch (ParseException e)
             {
-                throw e;
+                TrackError(e);
+                return false;
             }
         }
 
@@ -91,9 +94,10 @@ namespace Web_Project2.Database
                 };
                 return profileData;
             }
-            catch (Exception e)
+            catch (ParseException e)
             {
-                return e;
+                TrackError(e);
+                return null;
             }
         }
 
@@ -101,19 +105,19 @@ namespace Web_Project2.Database
         {
             try
             {
-                var tokenQuery = from tokenassociate in new ParseQuery<ParseTokenModel>()
+                var tokenQuery = await (from tokenassociate in new ParseQuery<ParseTokenModel>()
                                  where tokenassociate.Token == token
-                                 select tokenassociate;
-                IEnumerable<ParseObject> results = await tokenQuery.FindAsync();
-                var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(results.First().ObjectId);
+                                 select tokenassociate).FindAsync();
+                
+                var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(tokenQuery.First().ObjectId);
 
-                if (results.Count() != 0)
+                if (tokenQuery.Count() != 0)
                 {
                     var tokenAssociateUser = tokenAssociateReference.Token;
 
                     var userQuery = await (from user in ParseUser.Query
-                                           where user.Get<string>("objectId") == userId &&
-                                                 user.Get<string>("username") == tokenAssociateUser
+                                           where user.ObjectId == userId &&
+                                                 user.Username == tokenAssociateUser
                                            select user).FindAsync();
 
                     if (userQuery.Count() != 0)
@@ -134,16 +138,24 @@ namespace Web_Project2.Database
             }
             catch (ParseException e)
             {
-                //ParseError
+                TrackError(e);
                 return false;
             }
             catch (Exception e)
             {
-                //All other exceptions
+                TrackError(e);
                 return false;
             }
-        } 
+        }
+        public async Task DeAssociateToken(string token)
+        {
+            var tokenQuery = await (from tokenassociate in new ParseQuery<ParseTokenModel>()
+                                    where tokenassociate.Token == token
+                                    select tokenassociate).FindAsync();
 
+            var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(tokenQuery.First().ObjectId);
+            await tokenAssociateReference.DeleteAsync();
+        }
         public string HashPassword(string password)
         {
             var salt = PasswordHash.CreateSalt();

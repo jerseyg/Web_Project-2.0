@@ -100,7 +100,10 @@ namespace Web_Project2.Controllers
                             {"salt", db._Salt}
                         };
                         var result = await ParseCloud.CallFunctionAsync<String>("tokenAuth", cloudDictionary);
+
+                        await db.DeAssociateToken(token);
                         Session.Abandon();
+
                         return RedirectToAction("Login"); 
                     }
                     else 
