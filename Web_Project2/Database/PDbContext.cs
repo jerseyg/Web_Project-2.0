@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Providers.Entities;
 using Web_Project2.Controllers;
 using Web_Project2.Models;
 
@@ -117,13 +116,6 @@ namespace Web_Project2.Database
                 var tokenQuery = await (from tokenassociate in new ParseQuery<ParseTokenModel>()
                                  where tokenassociate.Token == token
                                  select tokenassociate).FindAsync();
-<<<<<<< HEAD
-<<<<<<< HEAD
-                
-=======
->>>>>>> d32a881c01e541a1f3b7855979b42f21c6393328
-=======
->>>>>>> d32a881c01e541a1f3b7855979b42f21c6393328
                 var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(tokenQuery.First().ObjectId);
 
                 if (tokenQuery.Count() != 0)
