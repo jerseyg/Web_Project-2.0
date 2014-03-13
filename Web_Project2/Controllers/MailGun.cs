@@ -16,13 +16,13 @@ namespace Web_Project2.Controllers
     {
 
         //Change key if needed
-        private const string mailGunApiKey = "key-2aelsu6k8tyk3gku66hh9l-4cwb9i0o5";
+        private readonly string mailGunApiKey = "key-2aelsu6k8tyk3gku66hh9l-4cwb9i0o5";
         //This is the email the receiver will see
-        private const string mailGunEmail = "Captivate ResetPassword <postmaster@sandbox2255.mailgun.org>";
+        private readonly string mailGunEmail = "Captivate ResetPassword <postmaster@sandbox2255.mailgun.org>";
         //Change domain if needed
-        private const string mailGunDomain = "sandbox2255.mailgun.org";
+        private readonly string mailGunDomain = "sandbox2255.mailgun.org";
         //Change subject if needed
-        private const string mailGunSubject = "Reset Password";
+        private readonly string mailGunSubject = "Reset Password";
 
         public string EmailAddress { get; set; }
         private string UserId { get; set; }
@@ -72,7 +72,7 @@ namespace Web_Project2.Controllers
             var salt = PasswordHash.CreateSalt();
             byte[] byteArraySalt = Encoding.UTF8.GetBytes(salt);
             var hash = PasswordHash.CreateHash(EmailAddress, byteArraySalt);
-            var ParseUser = await db.GetSingleUserObject(EmailAddress);
+            var ParseUser = await db.ReturnSingleUserObject(EmailAddress);
             UserId = ParseUser.ObjectId;
             token = RemoveSpecialCharacters(hash.Remove(0, 5));
             

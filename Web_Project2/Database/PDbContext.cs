@@ -25,7 +25,7 @@ namespace Web_Project2.Database
             return (foundUser.Count() != 0) ? true : false;
         }
 
-        public async Task<ParseObject> GetSingleUserObject(string emailAddress)
+        public async Task<ParseObject> ReturnSingleUserObject(string emailAddress)
         {
             var foundUser = await (from user in ParseUser.Query
                                    where user.Username == emailAddress
@@ -34,6 +34,15 @@ namespace Web_Project2.Database
             return userObject;
         }
 
+        public async Task<IEnumerable<ParseObject>> ReturnAllRowsParseObject(string parseClass)
+        {
+            var query = from genericClass in ParseObject.GetQuery(parseClass)
+                        where true
+                        select genericClass;
+            IEnumerable<ParseObject> results = await query.FindAsync();
+
+            return results;
+        }
         public async Task<Boolean> Login(string emailAddress, string password)
         {
             string email = emailAddress;
@@ -41,7 +50,7 @@ namespace Web_Project2.Database
 
             try
             {
-                var user = await GetSingleUserObject(email);
+                var user = await ReturnSingleUserObject(email);
                 var salt = user.Get<string>("salt");
                 var hashedPassword = HashPassword(email, salt);
 
@@ -84,7 +93,7 @@ namespace Web_Project2.Database
         {
             try
             {
-                var ParseUser = await GetSingleUserObject(emailAddress);
+                var ParseUser = await ReturnSingleUserObject(emailAddress);
                 var profileData = new SessionProfile()
                 {
                     _ParseID = ParseUser.ObjectId,
@@ -108,7 +117,10 @@ namespace Web_Project2.Database
                 var tokenQuery = await (from tokenassociate in new ParseQuery<ParseTokenModel>()
                                  where tokenassociate.Token == token
                                  select tokenassociate).FindAsync();
+<<<<<<< HEAD
                 
+=======
+>>>>>>> d32a881c01e541a1f3b7855979b42f21c6393328
                 var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(tokenQuery.First().ObjectId);
 
                 if (tokenQuery.Count() != 0)
