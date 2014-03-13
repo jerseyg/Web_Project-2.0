@@ -20,14 +20,7 @@ namespace Web_Project2.Controllers
 
     public class AccountController : Controller
     {
-        Web_Project2.Database.PDbContext db = new Web_Project2.Database.PDbContext();
-        public const int SALT_BYTE_SIZE = 24;
-
-        [IsValidLogin]
-        public ActionResult Details()
-        {
-            return View();
-        }
+        PDbContext db = new PDbContext();
 
         //
         // GET: /Account/Create
