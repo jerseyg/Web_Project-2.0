@@ -118,7 +118,10 @@ namespace Web_Project2.Database
                                  where tokenassociate.Token == token
                                  select tokenassociate).FindAsync();
 <<<<<<< HEAD
+<<<<<<< HEAD
                 
+=======
+>>>>>>> d32a881c01e541a1f3b7855979b42f21c6393328
 =======
 >>>>>>> d32a881c01e541a1f3b7855979b42f21c6393328
                 var tokenAssociateReference = ParseObject.CreateWithoutData<ParseTokenModel>(tokenQuery.First().ObjectId);
