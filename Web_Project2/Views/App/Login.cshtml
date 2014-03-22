@@ -15,16 +15,16 @@
         <h2 class="form-signin-heading">Account</h2>
 
 
-        @Html.LabelFor(model => model._EmailAddress)
+        @Html.LabelFor(model => model.EmailAddress)
         <br/>
-        @Html.ValidationMessageFor(model => model._EmailAddress)
-        @Html.EditorFor(model => model._EmailAddress, null, "")
+        @Html.ValidationMessageFor(model => model.EmailAddress)
+        @Html.EditorFor(model => model.EmailAddress, null, "")
 
 
-        @Html.LabelFor(model => model._Password)
+        @Html.LabelFor(model => model.Password)
         <br/>
-        @Html.ValidationMessageFor(model => model._Password)
-        @Html.EditorFor(model => model._Password, null, "")
+        @Html.ValidationMessageFor(model => model.Password)
+        @Html.EditorFor(model => model.Password, null, "")
         <a href="/App/Reset">Forgot Password</a>
 
         <label class="checkbox">

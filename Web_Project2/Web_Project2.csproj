@@ -154,6 +154,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\ResetController.cs" />
+    <Compile Include="Controllers\RSVPController.cs" />
+    <Compile Include="Database\CustomDbContext.cs" />
     <Compile Include="Database\ErrorHandler.cs" />
     <Compile Include="Database\PDbContext.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -163,10 +166,31 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountEntity.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\ParseTokenModel.cs" />
     <Compile Include="Models\SessionProfile.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\TokenAssociate.cs">
+      <DependentUpon>AccountEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>AccountEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserReset.cs" />
+    <Compile Include="Models\UserSession.cs" />
     <Compile Include="Models\UserTokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -240,6 +264,24 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Bellerose.ttf" />
     <Content Include="Content\css\toastr.less" />
+    <EntityDeploy Include="Models\AccountEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AccountEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AccountEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AccountEntity.edmx</DependentUpon>
+      <LastGenOutput>AccountEntity.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AccountEntity.edmx.diagram">
+      <DependentUpon>AccountEntity.edmx</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Models\AccountEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AccountEntity.edmx</DependentUpon>
+      <LastGenOutput>AccountEntity.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\Home.pubxml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

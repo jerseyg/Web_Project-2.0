@@ -59,7 +59,7 @@ namespace Web_Project2.Database
             }
             catch (ParseException e)
             {
-                TrackError(e);
+                
                 return false;
             }
 
@@ -69,12 +69,12 @@ namespace Web_Project2.Database
         {
             ParseUser newUser = new ParseUser()
             {
-                Username = userModel._EmailAddress,
-                Password = HashPassword(userModel._Password),
-                Email = userModel._EmailAddress
+                Username = userModel.EmailAddress,
+                Password = HashPassword(userModel.Password),
+                Email = userModel.EmailAddress
             };
-            newUser["firstName"] = userModel._FirstName;
-            newUser["lastName"] = userModel._LastName;
+            newUser["firstName"] = userModel.FirstName;
+            newUser["lastName"] = userModel.LastName;
             newUser["salt"] = _Salt;
             try
             {
@@ -83,7 +83,7 @@ namespace Web_Project2.Database
             }
             catch (ParseException e)
             {
-                TrackError(e);
+              
                 return false;
             }
         }
@@ -104,7 +104,7 @@ namespace Web_Project2.Database
             }
             catch (ParseException e)
             {
-                TrackError(e);
+                
                 return null;
             }
         }
@@ -145,12 +145,12 @@ namespace Web_Project2.Database
             }
             catch (ParseException e)
             {
-                TrackError(e);
+                
                 return false;
             }
             catch (Exception e)
             {
-                TrackError(e);
+                
                 return false;
             }
         }

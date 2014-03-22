@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Web_Project2.Database;
 
 namespace Web_Project2.Controllers
 {
@@ -11,7 +13,7 @@ namespace Web_Project2.Controllers
         //
         // GET: /Home/
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             return View();
         }

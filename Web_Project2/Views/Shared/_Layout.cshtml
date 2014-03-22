@@ -1,6 +1,6 @@
 ﻿
 @{
-   Web_Project2.Models.SessionProfile profile = (Web_Project2.Models.SessionProfile) HttpContext.Current.Session["UserProfile"];
+   Web_Project2.Models.UserSession profile = (Web_Project2.Models.UserSession) HttpContext.Current.Session["__UserSession__"];
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@
                 <a class="navbar-brand logofont" href="#">Captivate­®</a>
             </div>
             <div class="navbar-collapse collapse">
-                @if (Parse.ParseUser.CurrentUser != null)
+                @if (Web_Project2.Models.UserSession.CurrentUser.Username != null)
                 {
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/App">Dashboard</a></li>
@@ -45,7 +45,7 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/Account/Details">@profile._FirstName @profile._LastName</a></li>
+                        <li><a href="/Account/Details">@profile.FirstName @profile.LastName</a></li>
                         <li><a href="/App/Logoff">Logout</a></li>
                     </ul>
                 }
@@ -53,7 +53,9 @@
                 {
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
+                        <li><a href="#about">RSVP System</a></li>
+                        <li><a href="#about">Ticket system</a></li>
+                        <li><a href="#about">CMS</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

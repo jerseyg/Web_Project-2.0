@@ -20,8 +20,7 @@ namespace Web_Project2.Controllers
 
     public class AccountController : Controller
     {
-        PDbContext db = new PDbContext();
-
+        CustomDbContext CustomDb = new CustomDbContext();
         //
         // GET: /Account/Create
 
@@ -32,31 +31,23 @@ namespace Web_Project2.Controllers
 
         //
         // POST: /Account/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(User userModel)
-        {
-            
-
+        {           
                 if (ModelState.IsValid)
                 {
-                    bool create = await db.CreateUser(userModel);
-                    if (create != false)
+                    try
                     {
-                        await db.Login(userModel._EmailAddress, userModel._Password);
-                        var UserProfile = await db.CreateSession(userModel._EmailAddress);
-                        Session["UserProfile"] = UserProfile;
-
-                        return RedirectToAction("index", "App");
+                        await CustomDb.CreateNewUser(userModel);
+                        return RedirectToAction("Login", "App");
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        return View();
-                    }                   
+                        var value = ErrorHandler.GetInnerException(ex);
+                    }     
                 }
-                return View();
-  
+                return View(); 
         }
 
     }

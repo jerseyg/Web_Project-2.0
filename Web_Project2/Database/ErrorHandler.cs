@@ -8,21 +8,14 @@ namespace Web_Project2.Controllers
 {
     public class ErrorHandler
     {
-        public void TrackError(ParseException error)
+
+        public static string GetInnerException(Exception ex)
         {
-            var errDimensions = new Dictionary<string, string> 
+            if (ex.InnerException != null)
             {
-                { "error", Convert.ToString(error.Code) }
-            };
-            ParseAnalytics.TrackEventAsync("ParseError", errDimensions);
-        }
-        public void TrackError(Exception error)
-        {
-            var errDimensions = new Dictionary<string, string> 
-            {
-                { "error", Convert.ToString(error) }
-            };
-            ParseAnalytics.TrackEventAsync("ExceptionError", errDimensions);
+                return string.Format("{0} > {1} ", ex.InnerException.Message, GetInnerException(ex.InnerException));
+            }
+            return string.Empty;
         }
     }
 }

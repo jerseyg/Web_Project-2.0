@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Web_Project2.Database;
+using Web_Project2.Models;
 
 namespace Web_Project2.Controllers
 {
@@ -18,7 +19,7 @@ namespace Web_Project2.Controllers
         /// <param name="filterContext"></param>
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            if (ParseUser.CurrentUser != null) { }
+            if (UserSession.CurrentUser.Username != null) { }
             else { filterContext.Result = new RedirectResult("/App/Login"); }
         }
     }
