@@ -1,0 +1,33 @@
+﻿@model Web_Project2.Models.Event
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Event</legend>
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EventName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EventName)
+            @Html.ValidationMessageFor(model => model.EventName)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
