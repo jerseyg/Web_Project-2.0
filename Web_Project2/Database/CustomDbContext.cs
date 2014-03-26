@@ -14,13 +14,14 @@ namespace Web_Project2.Database
 {
     public class CustomDbContext
     {
-        AccountEntities AccountDb = new AccountEntities();
+        DevEntities db = new DevEntities();
+        
         public async Task<Boolean> IsUserValid(string emailAddress)
         {
             var isValid = new Int32();
                 await Task.Run(() =>
                 {
-                    var query = (from user in AccountDb.Users
+                    var query = (from user in db.Users
                                  where user.EmailAddress == emailAddress
                                  select user).Count();
                     isValid = query;
@@ -33,7 +34,7 @@ namespace Web_Project2.Database
             var isValid = new Int32();
             await Task.Run(() =>
             {
-                var query = (from user in AccountDb.Users
+                var query = (from user in db.Users
                              where user.UserId == UserId
                              select user).Count();
                 isValid = query;
@@ -49,7 +50,7 @@ namespace Web_Project2.Database
             await Task.Run(() =>
             {
 
-                var query = (from user in AccountDb.Users
+                var query = (from user in db.Users
                             where user.EmailAddress == emailAddress
                             select user).First();
                 userRow = query;
@@ -62,7 +63,7 @@ namespace Web_Project2.Database
             await Task.Run(() =>
             {
 
-                var query = (from user in AccountDb.Users
+                var query = (from user in db.Users
                              where user.UserId == UserId
                              select user).First();
                 userRow = query;
@@ -80,12 +81,12 @@ namespace Web_Project2.Database
                     userModel.UserId = Guid.NewGuid();
                     userModel.Password = HashPassword(userModel.Password);
                     userModel.Salt = Salt;
-                    AccountDb.Users.Add(userModel);
-                    AccountDb.SaveChanges();
+                    db.Users.Add(userModel);
+                    db.SaveChanges();
                 }
                 catch (DbUpdateException ex)
                 {
-                    throw;
+                    throw ex;
                 }
 
 
@@ -107,6 +108,7 @@ namespace Web_Project2.Database
 
                 if (hashedPassword == userDbPassword)
                 {
+                    UserSession.CurrentUser.UserId = user.UserId;
                     UserSession.CurrentUser.Username = email;
                     UserSession.CurrentUser.FirstName = user.FirstName;
                     UserSession.CurrentUser.LastName = user.LastName;
