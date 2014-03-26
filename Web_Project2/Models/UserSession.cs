@@ -27,6 +27,7 @@ namespace Web_Project2.Models
                 HttpContext.Current.Session["__UserSession__"] = null;
                 HttpContext.Current.Session.Abandon();                         
         }
+        public Guid UserId { get; set; }
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
