@@ -17,14 +17,14 @@ namespace Web_Project2.Models
     {
         public User()
         {
+            this.Events = new HashSet<Event>();
             this.TokenAssociates = new HashSet<TokenAssociate>();
         }
     
         public System.Guid UserId { get; set; }
-        [Required]
         [UIHint("EmailAddress")]
         public string EmailAddress { get; set; }
-        [Required]
+        public byte[] EmailAddressHash { get; set; }
         [UIHint("Password")]
         public string Password { get; set; }
         [UIHint("RetypePassword")]
@@ -37,6 +37,7 @@ namespace Web_Project2.Models
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
     
+        public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<TokenAssociate> TokenAssociates { get; set; }
     }
 }
