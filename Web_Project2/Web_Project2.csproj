@@ -152,7 +152,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\ResetController.cs" />
     <Compile Include="Controllers\RSVPController.cs" />
@@ -181,13 +180,34 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AccountEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DbEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DbEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DbEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event.cs">
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventInfo.cs">
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ParseTokenModel.cs" />
     <Compile Include="Models\SessionProfile.cs" />
     <Compile Include="Models\TokenAssociate.cs">
-      <DependentUpon>AccountEntity.tt</DependentUpon>
+      <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>AccountEntity.tt</DependentUpon>
+      <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserReset.cs" />
     <Compile Include="Models\UserSession.cs" />
@@ -282,6 +302,23 @@
       <DependentUpon>AccountEntity.edmx</DependentUpon>
       <LastGenOutput>AccountEntity.cs</LastGenOutput>
     </Content>
+    <EntityDeploy Include="Models\DbEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DbEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DbEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbEntity.edmx</DependentUpon>
+      <LastGenOutput>DbEntity.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DbEntity.edmx.diagram">
+      <DependentUpon>DbEntity.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\DbEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbEntity.edmx</DependentUpon>
+      <LastGenOutput>DbEntity.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\Home.pubxml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -322,7 +359,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
     <Content Include="Views\App\Index.cshtml" />
-    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\App\Create.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\App\Login.cshtml" />
@@ -334,9 +371,13 @@
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\App\Reset.cshtml" />
     <Content Include="Views\App\Reset_Password.cshtml" />
+    <Content Include="Views\RSVP\Create.cshtml" />
+    <Content Include="Views\RSVP\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Reset\" />
+    <Folder Include="Controllers\RSVP\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
