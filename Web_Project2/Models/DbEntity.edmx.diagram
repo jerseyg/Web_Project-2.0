@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c27a280e18c549e09bd6def9661656cf" Name="Diagram1">
+        <EntityTypeShape EntityType="DevModel.Event" Width="1.5" PointX="6.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DevModel.EventInfo" Width="1.5" PointX="8.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DevModel.TokenAssociate" Width="1.5" PointX="6.375" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DevModel.User" Width="1.5" PointX="4.125" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="DevModel.FK_Event_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DevModel.FK_EventInfo_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="DevModel.FkUserId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
