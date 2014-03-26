@@ -17,7 +17,7 @@ namespace Web_Project2.Controllers
     public class AppController : Controller
     {
 
-        PDbContext db = new PDbContext();
+        CustomDbContext CustomDb = new CustomDbContext();
         //
         // GET: /App/
         [IsValidLogin]
@@ -35,7 +35,7 @@ namespace Web_Project2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(User userModel)
         {
-            CustomDbContext CustomDb = new CustomDbContext();
+            
             if (ModelState.IsValid)
             {
                 bool login = await CustomDb.Login(userModel.EmailAddress, userModel.Password);
@@ -56,6 +56,30 @@ namespace Web_Project2.Controllers
                                        
         }
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: /Account/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(User userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await CustomDb.CreateNewUser(userModel);
+                    return RedirectToAction("Login", "App");
+                }
+                catch (Exception ex)
+                {
+                    var value = ErrorHandler.GetInnerException(ex);
+                }
+            }
+            return View();
+        }
        
         public ActionResult LogOff()
         {
